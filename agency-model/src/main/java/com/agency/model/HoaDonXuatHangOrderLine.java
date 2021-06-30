@@ -2,7 +2,7 @@ package com.agency.model;
 
 import java.io.Serializable;
 
-public class HoaDonNhapHangOrderLine implements Serializable {
+public class HoaDonXuatHangOrderLine implements Serializable {
 	private int id;
 	private int idHoaDonXuatHang;
 	private int idMatHang;
@@ -11,11 +11,11 @@ public class HoaDonNhapHangOrderLine implements Serializable {
 	private int soLuong;
 	private double donGia;
 	private double thanhTien;
-	public HoaDonNhapHangOrderLine() {
+	public HoaDonXuatHangOrderLine() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public HoaDonNhapHangOrderLine(int id, int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
+	public HoaDonXuatHangOrderLine(int id, int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
 			int soLuong, double donGia, double thanhTien) {
 		super();
 		this.id = id;
@@ -27,7 +27,7 @@ public class HoaDonNhapHangOrderLine implements Serializable {
 		this.donGia = donGia;
 		this.thanhTien = thanhTien;
 	}
-	public HoaDonNhapHangOrderLine(int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
+	public HoaDonXuatHangOrderLine(int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
 			int soLuong, double donGia, double thanhTien) {
 		super();
 		this.idHoaDonXuatHang = idHoaDonXuatHang;

@@ -4,21 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class MatHang implements Serializable {
-	private Integer id;
+	private int id;
 	private String tenMatHang;
 	private LoaiHang loaiHang;
 	private DonViTinh donViTinh;
 	private LocalDate ngayNhap;
 	private int soLuong;
 	private int giaBanTrenDonVi;
-	private int idMieuTa;
+	private MieuTa mieuTa;
 
 	public MatHang() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, LocalDate ngayNhap, int soLuong,
-			int giaBanTrenDonVi, int idMieuTa) {
+			int giaBanTrenDonVi, MieuTa mieuTa) {
 		super();
 		this.id = id;
 		this.tenMatHang = tenMatHang;
@@ -27,13 +27,11 @@ public class MatHang implements Serializable {
 		this.ngayNhap = ngayNhap;
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
-		this.idMieuTa = idMieuTa;
+		this.mieuTa = mieuTa;
 	}
-	
-	
 
 	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, LocalDate ngayNhap, int soLuong,
-			int giaBanTrenDonVi, int idMieuTa) {
+			int giaBanTrenDonVi, MieuTa mieuTa) {
 		super();
 		this.tenMatHang = tenMatHang;
 		this.loaiHang = loaiHang;
@@ -41,7 +39,7 @@ public class MatHang implements Serializable {
 		this.ngayNhap = ngayNhap;
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
-		this.idMieuTa = idMieuTa;
+		this.mieuTa = mieuTa;
 	}
 
 	public int getId() {
@@ -100,19 +98,19 @@ public class MatHang implements Serializable {
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 	}
 
-	public int getIdMieuTa() {
-		return idMieuTa;
+	public MieuTa getMieuTa() {
+		return mieuTa;
 	}
 
-	public void setIdMieuTa(int idMieuTa) {
-		this.idMieuTa = idMieuTa;
+	public void setMieuTa(MieuTa mieuTa) {
+		this.mieuTa = mieuTa;
 	}
 
 	@Override
 	public String toString() {
 		return "MatHang [id=" + id + ", tenMatHang=" + tenMatHang + ", loaiHang=" + loaiHang + ", donViTinh="
 				+ donViTinh + ", ngayNhap=" + ngayNhap + ", soLuong=" + soLuong + ", giaBanTrenDonVi=" + giaBanTrenDonVi
-				+ ", idMieuTa=" + idMieuTa + "]";
+				+ ", mieuTa=" + mieuTa + "]";
 	}
-
+	
 }

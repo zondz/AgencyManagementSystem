@@ -2,17 +2,15 @@ package com.agency.model;
 
 import java.io.Serializable;
 
-public class CongViecMatHang implements Serializable{
+public class MatHangChoCongViec implements Serializable{
 	private int id;
 	private int idCongViec;
 	private int idMatHang;
 	private int soLuong;
 	private double tongTien;
-	public CongViecMatHang() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public CongViecMatHang(int id, int idCongViec, int idMatHang, int soLuong, double tongTien) {
+	
+
+	public MatHangChoCongViec(int id, int idCongViec, int idMatHang, int soLuong, double tongTien) {
 		super();
 		this.id = id;
 		this.idCongViec = idCongViec;
@@ -20,13 +18,15 @@ public class CongViecMatHang implements Serializable{
 		this.soLuong = soLuong;
 		this.tongTien = tongTien;
 	}
-	public CongViecMatHang(int idCongViec, int idMatHang, int soLuong, double tongTien) {
+	
+	public MatHangChoCongViec(int idCongViec, int idMatHang, int soLuong, double tongTien) {
 		super();
 		this.idCongViec = idCongViec;
 		this.idMatHang = idMatHang;
 		this.soLuong = soLuong;
 		this.tongTien = tongTien;
 	}
+
 	public int getId() {
 		return id;
 	}
