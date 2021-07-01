@@ -3,14 +3,18 @@ package com.agency.model;
 import java.io.Serializable;
 
 public class HoaDonXuatHangOrderLine implements Serializable {
+	public static final int MIN_SO_LUONG = 0;
+	
 	private int id;
 	private int idHoaDonXuatHang;
+	// 3 cái này đã nằm trong bảng khác rồi -> có cần tạo các thuộc tính này không
 	private int idMatHang;
 	private String tenMatHang;
 	private DonViTinh donViTinh;
-	private int soLuong;
 	private double donGia;
-	private double thanhTien;
+	// 
+	private int soLuong;
+	private double thanhTien = soLuong*donGia;
 	public HoaDonXuatHangOrderLine() {
 		super();
 		// TODO Auto-generated constructor stub

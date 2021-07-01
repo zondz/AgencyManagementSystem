@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class HoaDonXuatHang implements Serializable{
+
 private int id;
 private int idNguonCungCap;
 List<HoaDonXuatHangOrderLine> orderLines;
