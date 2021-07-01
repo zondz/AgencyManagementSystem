@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class HoaDonXuatHangOrderLine implements Serializable {
 	public static final int MIN_SO_LUONG = 0;
-	
 	private int id;
 	private int idHoaDonXuatHang;
 	// 3 cái này đã nằm trong bảng khác rồi -> có cần tạo các thuộc tính này không
@@ -14,7 +13,7 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	private double donGia;
 	// 
 	private int soLuong;
-	private double thanhTien = soLuong*donGia;
+	private double thanhTien;
 	public HoaDonXuatHangOrderLine() {
 		super();
 		// TODO Auto-generated constructor stub
