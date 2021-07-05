@@ -6,4 +6,15 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>agency-ui</artifactId>
+  
+  <dependencies>
+  <dependency>
+  <groupId>
+  system-multi-app
+  </groupId>
+  <artifactId>agency-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  </dependency>
+  
+  </dependencies>
 </project>
