@@ -10,7 +10,8 @@ public interface GenericRepository<I extends Serializable, E extends Serializabl
 	void add(E entity);
 
 	void update(E entity);
-
+	
+	// ?
 	void delete(E entity);
 
 	void deleteById(I id);

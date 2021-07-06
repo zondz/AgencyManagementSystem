@@ -49,7 +49,7 @@ public class Database {
 		}
 	}
 
-	private ResultSet executeSQLReturningResultSet(String vSQL) {
+	 public ResultSet executeSQLReturningResultSet(String vSQL) {
 		if (this.connection == null) {
 			this.connectToDatabase();
 		}
@@ -66,7 +66,7 @@ public class Database {
 		return resultSet;
 	}
 
-	private void executeSQLNotReturningResultSet(String vSQL) {
+	public void executeSQLNotReturningResultSet(String vSQL) {
 
 		if (this.connection == null) {
 			this.connectToDatabase();
@@ -80,30 +80,6 @@ public class Database {
 		}
 
 	}
-
-	public List<Tho> getAllTho() {
-		int id;
-		String ten;
-		String soDienThoai;
-		List<Tho> result = new ArrayList<Tho>();
-		String vSQL = "Select*from Tho";
-		ResultSet resultSet = this.executeSQLReturningResultSet(vSQL);
-		try {
-			while (resultSet.next()) {
-				id = resultSet.getInt("id");
-				ten = resultSet.getString("ten");
-				soDienThoai = resultSet.getString("so_dien_thoai");
-				Tho temp = new Tho(id, ten, soDienThoai);
-				result.add(temp);
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidAttributeValueException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}
 }
+
+	
