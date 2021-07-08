@@ -1,6 +1,7 @@
 package com.agency.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,15 @@ public class CongViec implements Serializable {
 	public static final int MIN_TONG_CONG_THO = 0;
 	private int id;
 	private int idKhachHang;
-	private int idTho;
+
 	private String tenCongViec;
 	private double tongChiPhiMatHang;
 	private double tongCongTho;
+	private LocalDate ngayBatDau;
 	private List<MatHangChoCongViec> cacMatHangChoCongViec;
 
-	public CongViec(int id, int idKhachHang, int idTho, String tenCongViec, double tongChiPhiMatHang,
-			double tongCongTho) throws InvalidAttributeValueException {
+	public CongViec(int id, int idKhachHang, String tenCongViec, double tongChiPhiMatHang,
+			double tongCongTho, LocalDate ngayBatDau) throws InvalidAttributeValueException {
 		super();
 		if (!(this.validateTenCongViec(tenCongViec) && this.validateTongChiPhiMatHang(tongChiPhiMatHang)
 				&& this.validateTongCongTho(tongCongTho)))
@@ -28,25 +30,27 @@ public class CongViec implements Serializable {
 
 		this.id = id;
 		this.idKhachHang = idKhachHang;
-		this.idTho = idTho;
+	
 		this.tenCongViec = tenCongViec;
 		this.tongChiPhiMatHang = tongChiPhiMatHang;
 		this.tongCongTho = tongCongTho;
+		this.ngayBatDau = ngayBatDau;
 		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
 	}
 
-	public CongViec(int idKhachHang, int idTho, String tenCongViec, double tongChiPhiMatHang, double tongCongTho
-			) throws InvalidAttributeValueException {
+	public CongViec(int idKhachHang, String tenCongViec, double tongChiPhiMatHang, double tongCongTho,
+			LocalDate ngayBatDau) throws InvalidAttributeValueException {
 		super();
 		if (!(this.validateTenCongViec(tenCongViec) && this.validateTongChiPhiMatHang(tongChiPhiMatHang)
 				&& this.validateTongCongTho(tongCongTho)))
 			throw new InvalidAttributeValueException("Thông tin công việc không hợp lệ");
 
 		this.idKhachHang = idKhachHang;
-		this.idTho = idTho;
+	
 		this.tenCongViec = tenCongViec;
 		this.tongChiPhiMatHang = tongChiPhiMatHang;
 		this.tongCongTho = tongCongTho;
+		this.ngayBatDau = ngayBatDau;
 		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
 	}
 
@@ -66,20 +70,14 @@ public class CongViec implements Serializable {
 		this.idKhachHang = idKhachHang;
 	}
 
-	public int getIdTho() {
-		return idTho;
-	}
-
-	public void setIdTho(int idTho) {
-		this.idTho = idTho;
-	}
 
 	public String getTenCongViec() {
 		return tenCongViec;
 	}
 
 	public void setTenCongViec(String tenCongViec) throws InvalidAttributeValueException {
-		if(!this.validateTenCongViec(tenCongViec)) throw new InvalidAttributeValueException("Tên công việc không hợp lệ : "+tenCongViec);
+		if (!this.validateTenCongViec(tenCongViec))
+			throw new InvalidAttributeValueException("Tên công việc không hợp lệ : " + tenCongViec);
 		this.tenCongViec = tenCongViec;
 	}
 
@@ -88,8 +86,9 @@ public class CongViec implements Serializable {
 	}
 
 	public void setTongChiPhiMatHang(double tongChiPhiMatHang) throws InvalidAttributeValueException {
-		if(!this.validateTongChiPhiMatHang(tongChiPhiMatHang)) throw new InvalidAttributeValueException("Tổng chi phí mặt hàng không hợp lệ: "+tongChiPhiMatHang);
-		
+		if (!this.validateTongChiPhiMatHang(tongChiPhiMatHang))
+			throw new InvalidAttributeValueException("Tổng chi phí mặt hàng không hợp lệ: " + tongChiPhiMatHang);
+
 		this.tongChiPhiMatHang = tongChiPhiMatHang;
 	}
 
@@ -98,7 +97,8 @@ public class CongViec implements Serializable {
 	}
 
 	public void setTongCongTho(double tongCongTho) throws InvalidAttributeValueException {
-		if(!this.validateTongCongTho(tongCongTho)) throw new InvalidAttributeValueException("tổng công thợ không hợp lệ: "+tongCongTho);
+		if (!this.validateTongCongTho(tongCongTho))
+			throw new InvalidAttributeValueException("tổng công thợ không hợp lệ: " + tongCongTho);
 		this.tongCongTho = tongCongTho;
 	}
 
@@ -110,8 +110,16 @@ public class CongViec implements Serializable {
 		this.cacMatHangChoCongViec = cacMatHangChoCongViec;
 	}
 
+	public LocalDate getNgayBatDau() {
+		return ngayBatDau;
+	}
+
+	public void setNgayBatDau(LocalDate ngayBatDau) {
+		this.ngayBatDau = ngayBatDau;
+	}
+
 	protected boolean validateTenCongViec(String tenCongViec) {
-		return tenCongViec!=null&&this.tenCongViec.length() <= this.MAX_LENGTH_TEN_CONG_VIEC;
+		return tenCongViec != null && tenCongViec.length() <= this.MAX_LENGTH_TEN_CONG_VIEC;
 	}
 
 	protected boolean validateTongChiPhiMatHang(double chiPhiMatHang) {
@@ -125,7 +133,7 @@ public class CongViec implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CongViec [id=" + id + ", idKhachHang=" + idKhachHang + ", idTho=" + idTho + ", tenCongViec="
+		return "CongViec [id=" + id + ", idKhachHang=" + idKhachHang + ",   tenCongViec="
 				+ tenCongViec + ", tongChiPhiMatHang=" + tongChiPhiMatHang + ", tongCongTho=" + tongCongTho
 				+ ", cacMatHangChoCongViec=" + cacMatHangChoCongViec + "]";
 	}
