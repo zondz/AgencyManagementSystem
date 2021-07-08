@@ -14,42 +14,42 @@ public class HoaDonMuaHang implements Serializable {
 	private int id;
 	private int idKhachHang;
 	// co can thiet khong ?
-	private String tenKhachHang;
-	private String soDienThoai;
-	private String diaChi;
-	//
 	private int vanChuyen;
 	private double tongCong;
 	private int datTruoc;
-	private double conLai = tongCong-datTruoc;
+	private double conLai ;
 	private List<HoaDonMuaHangOrderLine> orderLines;
-	public HoaDonMuaHang(int id, int idKhachHang, String tenKhachHang, String soDienThoai, String diaChi, int vanChuyen,
-			double tongCong, int datTruoc, double conLai) {
+	
+
+	
+	// day du lieu xuong database
+	public HoaDonMuaHang(int idKhachHang, int vanChuyen, int datTruoc , List<HoaDonMuaHangOrderLine> orderLines
+			) {
+		super();
+		
+		this.idKhachHang = idKhachHang;
+		this.orderLines = orderLines;
+		this.vanChuyen = vanChuyen;
+		this.datTruoc = datTruoc;
+		this.tongCong = this.calTongCong();
+		this.conLai = tongCong - datTruoc;
+	}
+
+
+	// lay du lieu len
+	public HoaDonMuaHang(int id, int idKhachHang, int vanChuyen, double tongCong, int datTruoc, double conLai,
+			List<HoaDonMuaHangOrderLine> orderLines) {
 		super();
 		this.id = id;
 		this.idKhachHang = idKhachHang;
-		this.tenKhachHang = tenKhachHang;
-		this.soDienThoai = soDienThoai;
-		this.diaChi = diaChi;
 		this.vanChuyen = vanChuyen;
 		this.tongCong = tongCong;
 		this.datTruoc = datTruoc;
 		this.conLai = conLai;
-		this.orderLines = new ArrayList<HoaDonMuaHangOrderLine>();
+		this.orderLines = orderLines;
 	}
-	public HoaDonMuaHang(int idKhachHang, String tenKhachHang, String soDienThoai, String diaChi, int vanChuyen,
-			double tongCong, int datTruoc, double conLai) {
-		super();
-		this.idKhachHang = idKhachHang;
-		this.tenKhachHang = tenKhachHang;
-		this.soDienThoai = soDienThoai;
-		this.diaChi = diaChi;
-		this.vanChuyen = vanChuyen;
-		this.tongCong = tongCong;
-		this.datTruoc = datTruoc;
-		this.conLai = conLai;
-		this.orderLines = new ArrayList<HoaDonMuaHangOrderLine>();
-	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -62,24 +62,7 @@ public class HoaDonMuaHang implements Serializable {
 	public void setIdKhachHang(int idKhachHang) {
 		this.idKhachHang = idKhachHang;
 	}
-	public String getTenKhachHang() {
-		return tenKhachHang;
-	}
-	public void setTenKhachHang(String tenKhachHang) {
-		this.tenKhachHang = tenKhachHang;
-	}
-	public String getSoDienThoai() {
-		return soDienThoai;
-	}
-	public void setSoDienThoai(String soDienThoai) {
-		this.soDienThoai = soDienThoai;
-	}
-	public String getDiaChi() {
-		return diaChi;
-	}
-	public void setDiaChi(String diaChi) {
-		this.diaChi = diaChi;
-	}
+	
 	public int getVanChuyen() {
 		return vanChuyen;
 	}
@@ -92,6 +75,7 @@ public class HoaDonMuaHang implements Serializable {
 	}
 	public void setTongCong(double tongCong) throws InvalidAttributeValueException {
 		if(!this.validateTongCong(tongCong)) throw new InvalidAttributeValueException("Sai thông tin tổng cộng tiền: "+tongCong);
+		//
 		this.tongCong = tongCong;
 	}
 	public double getDatTruoc() {
@@ -112,6 +96,15 @@ public class HoaDonMuaHang implements Serializable {
 		this.orderLines = orderLines;
 	}
 	// validate
+	private double calTongCong() {
+		double sum = 0 ;
+		for(int i = 0 ; i < this.orderLines.size() ; i ++) {
+			sum += this.orderLines.get(i).getThanhTien();
+		}
+		sum += this.vanChuyen;
+		return sum;
+		
+	}
 	
 	protected boolean validateVanChuyen(int vanChuyen) {
 		return vanChuyen>=MIN_VAN_CHUYEN;
@@ -123,13 +116,13 @@ public class HoaDonMuaHang implements Serializable {
 	protected boolean validateDatTruoc(int datTruoc) {
 		return datTruoc>=MIN_DAT_TRUOC&&datTruoc<=this.tongCong;
 	}
+
+
 	@Override
 	public String toString() {
-		return "HoaDonMuaHang [id=" + id + ", idKhachHang=" + idKhachHang + ", tenKhachHang=" + tenKhachHang
-				+ ", soDienThoai=" + soDienThoai + ", diaChi=" + diaChi + ", vanChuyen=" + vanChuyen + ", tongCong="
+		return "HoaDonMuaHang [id=" + id + ", idKhachHang=" + idKhachHang + ", vanChuyen=" + vanChuyen + ", tongCong="
 				+ tongCong + ", datTruoc=" + datTruoc + ", conLai=" + conLai + ", orderLines=" + orderLines + "]";
 	}
-	
 	
 	
 	
