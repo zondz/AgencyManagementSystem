@@ -1,18 +1,20 @@
-package com.agency.repository.implement;
+package com.agency.serviceimplement;
+
+import java.util.List;
 
 import com.agency.model.HoaDonXuatHang;
-import com.agency.repository.HoaDonXuatHangRepository;
+import com.agency.service.HoaDonXuatHangServiceRepository;
 
-public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangRepository{
+public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangServiceRepository{
 
 	@Override
-	public Iterable<HoaDonXuatHang> getAll() {
+	public List<HoaDonXuatHang> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HoaDonXuatHang get(Integer id) {
+	public HoaDonXuatHang getById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

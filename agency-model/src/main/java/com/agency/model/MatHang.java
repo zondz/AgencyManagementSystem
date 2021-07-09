@@ -14,7 +14,6 @@ public class MatHang implements Serializable {
 	private String tenMatHang;
 	private LoaiHang loaiHang;
 	private DonViTinh donViTinh;
-	private LocalDate ngayNhap;
 	private int soLuong;
 	private int giaBanTrenDonVi;
 	private MieuTa mieuTa;
@@ -23,7 +22,7 @@ public class MatHang implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, LocalDate ngayNhap, int soLuong,
+	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
 			int giaBanTrenDonVi, MieuTa mieuTa) throws InvalidAttributeValueException {
 		super();
 		if(!(this.validateTenMatHang(tenMatHang)&&this.validateSoLuong(soLuong)&&this.validateGiaBanTrenDonVi(giaBanTrenDonVi)))
@@ -32,13 +31,13 @@ public class MatHang implements Serializable {
 		this.tenMatHang = tenMatHang;
 		this.loaiHang = loaiHang;
 		this.donViTinh = donViTinh;
-		this.ngayNhap = ngayNhap;
+	
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 		this.mieuTa = mieuTa;
 	}
 
-	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, LocalDate ngayNhap, int soLuong,
+	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
 			int giaBanTrenDonVi, MieuTa mieuTa) throws InvalidAttributeValueException {
 		super();
 		if(!(this.validateTenMatHang(tenMatHang)&&this.validateSoLuong(soLuong)&&this.validateGiaBanTrenDonVi(giaBanTrenDonVi)))
@@ -46,7 +45,7 @@ public class MatHang implements Serializable {
 		this.tenMatHang = tenMatHang;
 		this.loaiHang = loaiHang;
 		this.donViTinh = donViTinh;
-		this.ngayNhap = ngayNhap;
+
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 		this.mieuTa = mieuTa;
@@ -86,13 +85,6 @@ public class MatHang implements Serializable {
 		this.donViTinh = donViTinh;
 	}
 
-	public LocalDate getNgayNhap() {
-		return ngayNhap;
-	}
-
-	public void setNgayNhap(LocalDate ngayNhap) {
-		this.ngayNhap = ngayNhap;
-	}
 
 	public int getSoLuong() {
 		return soLuong;
@@ -137,8 +129,10 @@ public class MatHang implements Serializable {
 	@Override
 	public String toString() {
 		return "MatHang [id=" + id + ", tenMatHang=" + tenMatHang + ", loaiHang=" + loaiHang + ", donViTinh="
-				+ donViTinh + ", ngayNhap=" + ngayNhap + ", soLuong=" + soLuong + ", giaBanTrenDonVi=" + giaBanTrenDonVi
-				+ ", mieuTa=" + mieuTa + "]";
+				+ donViTinh + ", soLuong=" + soLuong + ", giaBanTrenDonVi=" + giaBanTrenDonVi + ", mieuTa=" + mieuTa
+				+ "]";
 	}
+
+	
 
 }

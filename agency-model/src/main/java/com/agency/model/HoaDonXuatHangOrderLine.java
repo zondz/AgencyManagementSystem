@@ -2,56 +2,75 @@ package com.agency.model;
 
 import java.io.Serializable;
 
+import javax.naming.directory.InvalidAttributeValueException;
+
 public class HoaDonXuatHangOrderLine implements Serializable {
-	public static final int MIN_SO_LUONG = 0;
+	public static final int MIN_SO_LUONG = 1;
+	public static final int MIN_DON_GIA = 0;
+	
 	private int id;
-	private int idHoaDonXuatHang;
-	// 3 cái này đã nằm trong bảng khác rồi -> có cần tạo các thuộc tính này không
+	private int idHoaDon;
 	private int idMatHang;
-	private String tenMatHang;
 	private DonViTinh donViTinh;
-	private double donGia;
-	// 
 	private int soLuong;
+	private double donGia;
+	private int giaKhong;
 	private double thanhTien;
-	public HoaDonXuatHangOrderLine() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	// 
+	
+	public int getIdHoaDon() {
+		return idHoaDon;
 	}
-	public HoaDonXuatHangOrderLine(int id, int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
-			int soLuong, double donGia, double thanhTien) {
+	// day xuong database
+	public HoaDonXuatHangOrderLine( int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, double donGia, int giaKhong
+			) {
+		super();
+
+		this.idHoaDon = idHoaDon;
+		this.idMatHang = idMatHang;
+		this.donViTinh = donViTinh;
+		this.soLuong = soLuong;
+		this.donGia = donGia;
+		this.giaKhong = giaKhong;
+		if(giaKhong!=0) {
+			this.thanhTien = soLuong*giaKhong;
+		}
+		else{this.thanhTien = soLuong*donGia;}
+	}
+	
+	
+	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, double donGia,int giaKhong
+			) {
 		super();
 		this.id = id;
-		this.idHoaDonXuatHang = idHoaDonXuatHang;
+		this.idHoaDon = idHoaDon;
 		this.idMatHang = idMatHang;
-		this.tenMatHang = tenMatHang;
 		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
-		this.thanhTien = thanhTien;
+		this.giaKhong = giaKhong;
+		if(giaKhong!=0) {
+			this.thanhTien = soLuong*giaKhong;
+		}
+		else{this.thanhTien = soLuong*donGia;}
 	}
-	public HoaDonXuatHangOrderLine(int idHoaDonXuatHang, int idMatHang, String tenMatHang, DonViTinh donViTinh,
-			int soLuong, double donGia, double thanhTien) {
-		super();
-		this.idHoaDonXuatHang = idHoaDonXuatHang;
-		this.idMatHang = idMatHang;
-		this.tenMatHang = tenMatHang;
-		this.donViTinh = donViTinh;
-		this.soLuong = soLuong;
-		this.donGia = donGia;
-		this.thanhTien = thanhTien;
+	
+	
+	public int getGiaKhong() {
+		return giaKhong;
 	}
-	public int getId() {
-		return id;
+	public void setGiaKhong(int giaKhong) {
+		this.giaKhong = giaKhong;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getIdHoaDonXuatHang() {
-		return idHoaDonXuatHang;
+	public void setThanhTien(double thanhTien) {
+		this.thanhTien = thanhTien;
 	}
-	public void setIdHoaDonXuatHang(int idHoaDonXuatHang) {
-		this.idHoaDonXuatHang = idHoaDonXuatHang;
+	public void setIdHoaDon(int idHoaDon) {
+		this.idHoaDon = idHoaDon;
 	}
 	public int getIdMatHang() {
 		return idMatHang;
@@ -59,12 +78,7 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	public void setIdMatHang(int idMatHang) {
 		this.idMatHang = idMatHang;
 	}
-	public String getTenMatHang() {
-		return tenMatHang;
-	}
-	public void setTenMatHang(String tenMatHang) {
-		this.tenMatHang = tenMatHang;
-	}
+	
 	public DonViTinh getDonViTinh() {
 		return donViTinh;
 	}
@@ -74,27 +88,41 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	public int getSoLuong() {
 		return soLuong;
 	}
-	public void setSoLuong(int soLuong) {
+	public void setSoLuong(int soLuong) throws InvalidAttributeValueException {
+		if(!this.validateSoLuong(soLuong)) throw new InvalidAttributeValueException("Nhập sai số lượng : "+soLuong);
 		this.soLuong = soLuong;
 	}
 	public double getDonGia() {
 		return donGia;
 	}
-	public void setDonGia(double donGia) {
+	public void setDonGia(double donGia) throws InvalidAttributeValueException {
+		if(!this.validateDonGia(donGia)) throw new InvalidAttributeValueException("Nhập sai đơn giá: "+donGia);
 		this.donGia = donGia;
 	}
 	public double getThanhTien() {
 		return thanhTien;
 	}
-	public void setThanhTien(double thanhTien) {
-		this.thanhTien = thanhTien;
+
+	public int getId() {
+		return id;
+	}
+
+	protected boolean validateSoLuong(int soLuong) {
+		return soLuong>=MIN_SO_LUONG;
+	}
+	
+	protected boolean validateDonGia(double donGia) {
+		return donGia>=MIN_DON_GIA;
 	}
 	@Override
 	public String toString() {
-		return "HoaDonNhapHangOrderLine [id=" + id + ", idHoaDonXuatHang=" + idHoaDonXuatHang + ", idMatHang="
-				+ idMatHang + ", tenMatHang=" + tenMatHang + ", donViTinh=" + donViTinh + ", soLuong=" + soLuong
-				+ ", donGia=" + donGia + ", thanhTien=" + thanhTien + "]";
+		return "HoaDonXuatHangOrderLine [id=" + id + ", idHoaDon=" + idHoaDon + ", idMatHang=" + idMatHang
+				+ ", donViTinh=" + donViTinh + ", soLuong=" + soLuong + ", donGia=" + donGia + ", giaKhong=" + giaKhong
+				+ ", thanhTien=" + thanhTien + "]";
 	}
+	
+	
+
 	
 	
 }

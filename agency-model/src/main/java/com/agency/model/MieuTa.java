@@ -14,36 +14,32 @@ public class MieuTa implements Serializable {
 	private String nguonGocXuatXu;
 	private String congTySanXuat;
 	private String mauSac;
-
+	
 	private KichThuoc kichThuoc;
-
-	public MieuTa(int id, String nguonGocXuatXu, String congTySanXuat, String mauSac, 
-			KichThuoc kichThuoc) throws InvalidAttributesException {
-
+	private Origin origin;
+	
+	
+	public MieuTa(int id, String nguonGocXuatXu, String congTySanXuat, String mauSac, KichThuoc kichThuoc,
+			Origin origin) {
 		super();
-		if (!(this.validateNguonGocXuatXu(nguonGocXuatXu) && this.validateCongTySanXuat(congTySanXuat)
-				&& this.validateMauSac(mauSac) ))
-			throw new InvalidAttributesException("Sai thông tin miêu tả");
 		this.id = id;
 		this.nguonGocXuatXu = nguonGocXuatXu;
 		this.congTySanXuat = congTySanXuat;
 		this.mauSac = mauSac;
-
 		this.kichThuoc = kichThuoc;
+		this.origin = origin;
 	}
+	
 
-	public MieuTa(String nguonGocXuatXu, String congTySanXuat, String mauSac,
-			KichThuoc kichThuoc) throws InvalidAttributesException {
+	public MieuTa(String nguonGocXuatXu, String congTySanXuat, String mauSac, KichThuoc kichThuoc, Origin origin) {
 		super();
-		if (!(this.validateNguonGocXuatXu(nguonGocXuatXu) && this.validateCongTySanXuat(congTySanXuat)
-				&& this.validateMauSac(mauSac) ))
-			throw new InvalidAttributesException("Sai thông tin miêu tả");
 		this.nguonGocXuatXu = nguonGocXuatXu;
 		this.congTySanXuat = congTySanXuat;
 		this.mauSac = mauSac;
-	
 		this.kichThuoc = kichThuoc;
+		this.origin = origin;
 	}
+
 
 	public int getId() {
 		return id;
@@ -101,11 +97,14 @@ public class MieuTa implements Serializable {
 		return mauSac != null && mauSac.length() <= MAX_LENGTH_MAU_SAC;
 	}
 
+
 	@Override
 	public String toString() {
 		return "MieuTa [id=" + id + ", nguonGocXuatXu=" + nguonGocXuatXu + ", congTySanXuat=" + congTySanXuat
-				+ ", mauSac=" + mauSac + ", kichThuoc=" + kichThuoc + "]";
+				+ ", mauSac=" + mauSac + ", kichThuoc=" + kichThuoc + ", origin=" + origin + "]";
 	}
+
+
 
 	
 }

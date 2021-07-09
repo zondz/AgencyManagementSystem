@@ -32,7 +32,8 @@ public class KhachHangServiceRepositoryImplement implements KhachHangServiceRepo
 	public void update(KhachHang entity) {
 		khachHangRepository.update(entity);
 	}
-
+	
+	
 	public void delete(KhachHang entity) {
 		// TODO Auto-generated method stub
 		
