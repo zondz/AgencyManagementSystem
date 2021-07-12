@@ -95,10 +95,6 @@ public class ThoCongViecRepositoryImplement implements ThoCongViecRepository{
 		database.executeSQLNotReturningResultSet(vSQL);
 	}
 
-	public void delete(ThoCongViec entity) {
-		// TODO Auto-generated method stub	
-		
-	}
 	
 	// tested
 	public void deleteById(Integer id) {

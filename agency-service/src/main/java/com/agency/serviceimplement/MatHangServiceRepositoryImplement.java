@@ -37,11 +37,7 @@ public class MatHangServiceRepositoryImplement implements MatHangServiceReposito
 		
 	}
 
-	@Override
-	public void delete(MatHang entity) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void deleteById(Integer id) {

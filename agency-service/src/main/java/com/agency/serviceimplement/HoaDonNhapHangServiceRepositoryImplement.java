@@ -31,12 +31,7 @@ public class HoaDonNhapHangServiceRepositoryImplement implements HoaDonNhapHangS
 		
 	}
 
-	@Override
-	public void delete(HoaDonNhapHang entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub

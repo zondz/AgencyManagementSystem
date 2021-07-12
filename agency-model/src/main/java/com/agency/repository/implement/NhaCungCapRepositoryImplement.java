@@ -84,6 +84,9 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 	// tested
 	public void add(NhaCungCap entity) {
 		// TODO Auto-generated method stub
+		
+		// xem xét loại nguồn 
+		
 		String vSQL = "INSERT INTO NguonCungCap(ten,loai_nguon,so_dien_thoai,dia_chi)" + "VALUES(" + "\""
 				+ entity.getTen() + "\"" + "," + "\"" + entity.getLoaiNguon() + "\"" + "," + "\""
 				+ entity.getSoDienThoai() + "\"" + "," + "\"" + entity.getDiaChi() + "\"" + ");";

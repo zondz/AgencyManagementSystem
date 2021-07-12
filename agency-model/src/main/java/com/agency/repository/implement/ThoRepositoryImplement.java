@@ -84,13 +84,7 @@ public class ThoRepositoryImplement implements ThoRepository {
 		database.executeSQLNotReturningResultSet(vSQL);
 	}
 	
-	
-	// tai sao lai can
-	public void delete(Tho entity) {
-		// TODO Auto-generated method stub
-	
-	}
-	
+
 	// tested
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub

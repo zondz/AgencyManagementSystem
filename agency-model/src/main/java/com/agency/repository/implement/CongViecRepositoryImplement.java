@@ -125,10 +125,6 @@ public class CongViecRepositoryImplement implements CongViecRepository{
 
 	
 
-	public void delete(CongViec entity) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	// tested
 	public void deleteById(Integer id) {

@@ -19,11 +19,25 @@ public class HoaDonXuatHang implements Serializable {
 	private int datTruoc;
 	private int giamGia;
 	private double conLai ;
-	private int idTrangThaiHoaDon;
+	private TrangThaiHoaDon trangThaiHoaDon;
 	private List<HoaDonXuatHangOrderLine> orderLines;
 	
 
 	
+	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen, int datTruoc, int giamGia,
+			TrangThaiHoaDon trangThaiHoaDon) {
+		super();
+		this.id = id;
+		this.idKhachHang = idKhachHang;
+		this.vanChuyen = vanChuyen;
+		this.datTruoc = datTruoc;
+		this.giamGia = giamGia;
+		this.trangThaiHoaDon = trangThaiHoaDon;
+	}
+
+
+
+
 	// day du lieu xuong database
 	public HoaDonXuatHang(int idKhachHang, int vanChuyen, int datTruoc ,int giamGia, List<HoaDonXuatHangOrderLine> orderLines
 			) {
@@ -37,47 +51,59 @@ public class HoaDonXuatHang implements Serializable {
 		this.giamGia = giamGia;
 		this.conLai = tongCong - giamGia - datTruoc;
 		if(this.conLai>0) {
-			this.idTrangThaiHoaDon =1;
+			this.trangThaiHoaDon =TrangThaiHoaDon.CònNợ;
 		}
 		else {
-			this.idTrangThaiHoaDon = 0;
+			this.trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
 		}
 	
 	}
+	
+	
 
 
 	// lay du lieu len
-	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen, double tongCong,int giamGia, int datTruoc,
-			List<HoaDonXuatHangOrderLine> orderLines) {
+	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen,List<HoaDonXuatHangOrderLine> orderLines,int giamGia, int datTruoc
+			) {
 		super();
 		this.id = id;
 		this.idKhachHang = idKhachHang;
 		this.vanChuyen = vanChuyen;
-		this.tongCong = tongCong;
+		this.orderLines = orderLines;
+		this.tongCong = this.calTongCong();
 		this.giamGia = giamGia;
 		this.datTruoc = datTruoc;	
 		this.conLai = tongCong -giamGia- datTruoc;
 
-		this.orderLines = orderLines;
 		
 		if(this.conLai>0) {
-			this.idTrangThaiHoaDon =1;
+			this.trangThaiHoaDon =TrangThaiHoaDon.CònNợ;
 		}
 		else {
-			this.idTrangThaiHoaDon = 0;
+			this.trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
 		}
-	
 		
 	}
 
+	
 
-	public int getIdTrangThaiDonHang() {
-		return idTrangThaiHoaDon;
+	public int getGiamGia() {
+		return giamGia;
 	}
 
 
-	public void setIdTrangThaiDonHang(int idTrangThaiDonHang) {
-		this.idTrangThaiHoaDon = idTrangThaiDonHang;
+	public void setGiamGia(int giamGia) {
+		this.giamGia = giamGia;
+	}
+
+
+	public TrangThaiHoaDon getTrangThaiHoaDon() {
+		return trangThaiHoaDon;
+	}
+
+
+	public void setTrangThaiHoaDon(TrangThaiHoaDon trangThaiHoaDon) {
+		this.trangThaiHoaDon = trangThaiHoaDon;
 	}
 
 

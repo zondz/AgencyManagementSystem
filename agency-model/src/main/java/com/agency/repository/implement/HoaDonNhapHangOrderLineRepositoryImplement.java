@@ -1,13 +1,23 @@
 package com.agency.repository.implement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.agency.model.HoaDonNhapHangOrderLine;
+import com.agency.model.database.Database;
 import com.agency.repository.HoaDonNhapHangOrderLineRepository;
 
 public class HoaDonNhapHangOrderLineRepositoryImplement implements HoaDonNhapHangOrderLineRepository{
-
+	Database database;
+	
+	public HoaDonNhapHangOrderLineRepositoryImplement() {
+		database  = Database.getInstance();
+	}
 	@Override
 	public Iterable<HoaDonNhapHangOrderLine> getAll() {
-		// TODO Auto-generated method stub
+		List<HoaDonNhapHangOrderLine> list = new ArrayList<>();
+		String vSQL = "SELECT * FROM HoaDonNhapHangOrderLine";
+		
 		return null;
 	}
 
@@ -29,11 +39,6 @@ public class HoaDonNhapHangOrderLineRepositoryImplement implements HoaDonNhapHan
 		
 	}
 
-	@Override
-	public void delete(HoaDonNhapHangOrderLine entity) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void deleteById(Integer id) {

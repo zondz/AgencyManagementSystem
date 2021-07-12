@@ -1,5 +1,7 @@
 package com.agency.repository.implement;
 
+import java.util.List;
+
 import com.agency.model.HoaDonXuatHangOrderLine;
 import com.agency.repository.HoaDonXuatHangOrderLineRepository;
 
@@ -29,16 +31,19 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 		
 	}
 
-	@Override
-	public void delete(HoaDonXuatHangOrderLine entity) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<HoaDonXuatHangOrderLine> getByHoaDonMuaHangId(Integer HoaDonMuaHangId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -7,27 +7,27 @@ import java.util.List;
 public class HoaDonNhapHang implements Serializable{
 
 private int id;
-private int idNguonCungCap;
+private int idNhaCungCap;
 List<HoaDonNhapHangOrderLine> orderLines;
 private LocalDate ngayCungCap;
 private double tongTien;
 
-public HoaDonNhapHang(int idNguonCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
+public HoaDonNhapHang(int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
 		double tongTien) {
 	super();
-	this.idNguonCungCap = idNguonCungCap;
+	this.idNhaCungCap = idNhaCungCap;
 	this.orderLines = orderLines;
 	this.ngayCungCap = ngayCungCap;
-	this.tongTien = tongTien;
+	this.tongTien = this.calculateTongTien(orderLines);
 }
-public HoaDonNhapHang(int id, int idNguonCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
+public HoaDonNhapHang(int id, int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
 		double tongTien) {
 	super();
 	this.id = id;
-	this.idNguonCungCap = idNguonCungCap;
+	this.idNhaCungCap = idNhaCungCap;
 	this.orderLines = orderLines;
 	this.ngayCungCap = ngayCungCap;
-	this.tongTien = tongTien;
+	this.tongTien = this.calculateTongTien(orderLines);
 }
 public int getId() {
 	return id;
@@ -35,11 +35,11 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
-public int getIdNguonCungCap() {
-	return idNguonCungCap;
+public int getidNhaCungCap() {
+	return idNhaCungCap;
 }
-public void setIdNguonCungCap(int idNguonCungCap) {
-	this.idNguonCungCap = idNguonCungCap;
+public void setidNhaCungCap(int idNhaCungCap) {
+	this.idNhaCungCap = idNhaCungCap;
 }
 
 public List<HoaDonNhapHangOrderLine> getOrderLines() {
@@ -60,9 +60,18 @@ public double getTongTien() {
 public void setTongTien(double tongTien) {
 	this.tongTien = tongTien;
 }
+
+private double calculateTongTien( List<HoaDonNhapHangOrderLine> orderLines) {
+	double sum = 0; 
+	for(HoaDonNhapHangOrderLine temp : orderLines) {
+		sum += temp.getThanhTien();
+	}
+	return sum;
+}
+
 @Override
 public String toString() {
-	return "HoaDonNhapHang [id=" + id + ", idNguonCungCap=" + idNguonCungCap + ", orderLines=" + orderLines
+	return "HoaDonNhapHang [id=" + id + ", idNhaCungCap=" + idNhaCungCap + ", orderLines=" + orderLines
 			+ ", ngayCungCap=" + ngayCungCap + ", tongTien=" + tongTien + "]";
 }
 

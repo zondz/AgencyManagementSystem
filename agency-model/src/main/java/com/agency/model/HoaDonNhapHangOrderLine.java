@@ -6,25 +6,49 @@ public class HoaDonNhapHangOrderLine implements Serializable {
 	public static final int MIN_SO_LUONG = 0;
 	private int id;
 	private int idHoaDonXuatHang;
-	// 3 cái này đã nằm trong bảng khác rồi -> có cần tạo các thuộc tính này không
-	// 
+	private int idMatHang;
 	private int soLuong;
+	private double donGia;
 	private double thanhTien;
 	
 
-	public HoaDonNhapHangOrderLine(int idHoaDonXuatHang, int soLuong, double thanhTien) {
-		super();
-		this.idHoaDonXuatHang = idHoaDonXuatHang;
-		this.soLuong = soLuong;
-		this.thanhTien = thanhTien;
-	}
-	public HoaDonNhapHangOrderLine(int id, int idHoaDonXuatHang, int soLuong, double thanhTien) {
+	
+	public HoaDonNhapHangOrderLine(int id, int idHoaDonXuatHang, int idMatHang, int soLuong,double donGia, double thanhTien) {
 		super();
 		this.id = id;
 		this.idHoaDonXuatHang = idHoaDonXuatHang;
+		this.idMatHang = idMatHang;
 		this.soLuong = soLuong;
-		this.thanhTien = thanhTien;
+		this.donGia = donGia;
+		this.thanhTien = soLuong*donGia;
 	}
+	
+	public HoaDonNhapHangOrderLine(int idHoaDonXuatHang, int idMatHang, int soLuong,double donGia, double thanhTien) {
+		super();
+		this.idHoaDonXuatHang = idHoaDonXuatHang;
+		this.idMatHang = idMatHang;
+		this.soLuong = soLuong;
+		this.donGia = donGia;
+		this.thanhTien = soLuong*donGia;
+	}
+	
+
+	public double getDonGia() {
+		return donGia;
+	}
+
+	public void setDonGia(double donGia) {
+		this.donGia = donGia;
+	}
+
+	public int getIdMatHang() {
+		return idMatHang;
+	}
+
+	public void setIdMatHang(int idMatHang) {
+		this.idMatHang = idMatHang;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -51,11 +75,13 @@ public class HoaDonNhapHangOrderLine implements Serializable {
 	public void setThanhTien(double thanhTien) {
 		this.thanhTien = thanhTien;
 	}
+
 	@Override
 	public String toString() {
-		return "HoaDonNhapHangOrderLine [id=" + id + ", idHoaDonXuatHang=" + idHoaDonXuatHang + ", soLuong=" + soLuong
-				+ ", thanhTien=" + thanhTien + "]";
+		return "HoaDonNhapHangOrderLine [id=" + id + ", idHoaDonXuatHang=" + idHoaDonXuatHang + ", idMatHang="
+				+ idMatHang + ", soLuong=" + soLuong + ", donGia=" + donGia + ", thanhTien=" + thanhTien + "]";
 	}
 
+	
 	
 }

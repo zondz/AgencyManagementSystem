@@ -18,6 +18,8 @@ public NhaCungCap() {
 	super();
 	// TODO Auto-generated constructor stub
 }
+
+// lay tu database len
 public NhaCungCap(int id, String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi) throws InvalidAttributeValueException {
 	super();
 	if(!(this.validateTen(ten))){
@@ -36,6 +38,8 @@ public NhaCungCap(int id, String ten, LoaiNguon loaiNguon, String soDienThoai, S
 	this.soDienThoai = soDienThoai;
 	this.diaChi = diaChi;
 }
+
+// day xuong database
 public NhaCungCap(String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi) throws InvalidAttributeValueException {
 	super();
 	if(!(this.validateTen(ten))){
@@ -87,6 +91,23 @@ public void setDiaChi(String diaChi) throws InvalidAttributeValueException {
 	this.diaChi = diaChi;
 }
 
+//protected LoaiNguon setLoaiNguon(int idLoaiNguon) {
+//	switch(idLoaiNguon) {
+//	case 1 : 
+//		return  LoaiNguon.NhàSảnXuất;
+//		
+//	case 2 : 
+//		return LoaiNguon.ĐạiLýCấpMột;
+//		
+//	case 3 :
+//		return loaiNguon.ĐạiLýCấpHai;
+//
+//	default : 
+//		return null;
+//	
+//	}
+//	
+//} 
 protected boolean validateTen(String ten) {
 	return ten!=null&&ten.length()<=MAX_LENGTH_TEN;
 }

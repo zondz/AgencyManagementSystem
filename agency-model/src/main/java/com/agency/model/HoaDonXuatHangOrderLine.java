@@ -57,6 +57,9 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	}
 	
 	
+	public HoaDonXuatHangOrderLine() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getGiaKhong() {
 		return giaKhong;
 	}
