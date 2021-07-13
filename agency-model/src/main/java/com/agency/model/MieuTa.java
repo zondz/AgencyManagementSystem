@@ -11,35 +11,52 @@ public class MieuTa implements Serializable {
 	public static final int MAX_LENGTH_MAU_SAC = 20;
 
 	private int id;
-	private String nguonGocXuatXu;
-	private String congTySanXuat;
+	private int idMatHang;
 	private String mauSac;
-	
 	private KichThuoc kichThuoc;
 	private Origin origin;
 	
 	
-	public MieuTa(int id, String nguonGocXuatXu, String congTySanXuat, String mauSac, KichThuoc kichThuoc,
-			Origin origin) {
-		super();
-		this.id = id;
-		this.nguonGocXuatXu = nguonGocXuatXu;
-		this.congTySanXuat = congTySanXuat;
-		this.mauSac = mauSac;
-		this.kichThuoc = kichThuoc;
-		this.origin = origin;
-	}
+
 	
 
-	public MieuTa(String nguonGocXuatXu, String congTySanXuat, String mauSac, KichThuoc kichThuoc, Origin origin) {
+	public MieuTa(int idMatHang, String mauSac) {
 		super();
-		this.nguonGocXuatXu = nguonGocXuatXu;
-		this.congTySanXuat = congTySanXuat;
+		this.idMatHang = idMatHang;
+		this.mauSac = mauSac;
+	}
+
+	public MieuTa(int id, int idMatHang, String mauSac) {
+		super();
+		this.id = id;
+		this.idMatHang = idMatHang;
+		this.mauSac = mauSac;
+	}
+
+	public MieuTa(int id, int idMatHang, String mauSac, KichThuoc kichThuoc, Origin origin) {
+		super();
+		this.id = id;
+		this.idMatHang = idMatHang;
 		this.mauSac = mauSac;
 		this.kichThuoc = kichThuoc;
 		this.origin = origin;
 	}
 
+	public int getIdMatHang() {
+		return idMatHang;
+	}
+
+	public void setIdMatHang(int idMatHang) {
+		this.idMatHang = idMatHang;
+	}
+
+	public Origin getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(Origin origin) {
+		this.origin = origin;
+	}
 
 	public int getId() {
 		return id;
@@ -49,23 +66,6 @@ public class MieuTa implements Serializable {
 		this.id = id;
 	}
 
-	public String getNguonGocXuatXu() {
-		return nguonGocXuatXu;
-	}
-
-	public void setNguonGocXuatXu(String nguonGocXuatXu) throws InvalidAttributeValueException {
-		if(!this.validateNguonGocXuatXu(nguonGocXuatXu)) throw new InvalidAttributeValueException("Sai thông tin nguồn gốc xuất xứ : "+nguonGocXuatXu);
-		this.nguonGocXuatXu = nguonGocXuatXu;
-	}
-
-	public String getCongTySanXuat() {
-		return congTySanXuat;
-	}
-
-	public void setCongTySanXuat(String congTySanXuat) throws InvalidAttributeValueException {
-		if(!this.validateCongTySanXuat(congTySanXuat)) throw new InvalidAttributeValueException("Sai thông tin công ty sản xuất: "+congTySanXuat);
-		this.congTySanXuat = congTySanXuat;
-	}
 
 	public String getMauSac() {
 		return mauSac;
@@ -97,12 +97,12 @@ public class MieuTa implements Serializable {
 		return mauSac != null && mauSac.length() <= MAX_LENGTH_MAU_SAC;
 	}
 
-
 	@Override
 	public String toString() {
-		return "MieuTa [id=" + id + ", nguonGocXuatXu=" + nguonGocXuatXu + ", congTySanXuat=" + congTySanXuat
-				+ ", mauSac=" + mauSac + ", kichThuoc=" + kichThuoc + ", origin=" + origin + "]";
+		return "MieuTa [id=" + id + ", idMatHang=" + idMatHang + ", mauSac=" + mauSac + ", kichThuoc=" + kichThuoc
+				+ ", origin=" + origin + "]";
 	}
+
 
 
 

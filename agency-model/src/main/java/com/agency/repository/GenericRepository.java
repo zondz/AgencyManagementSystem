@@ -8,11 +8,9 @@ public interface GenericRepository<I extends Serializable, E extends Serializabl
 
 	E get(I id);
 
-	void add(E entity);
-
-	void update(E entity);
-	
-
 	void deleteById(I id);
 
+	void add(E entity);
+	
+	void update(E entity);
 }

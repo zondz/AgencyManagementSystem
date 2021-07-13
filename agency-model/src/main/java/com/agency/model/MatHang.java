@@ -37,18 +37,18 @@ public class MatHang implements Serializable {
 		this.mieuTa = mieuTa;
 	}
 
-	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
-			int giaBanTrenDonVi, MieuTa mieuTa) throws InvalidAttributeValueException {
+	
+	
+
+	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
+			int giaBanTrenDonVi) {
 		super();
-		if(!(this.validateTenMatHang(tenMatHang)&&this.validateSoLuong(soLuong)&&this.validateGiaBanTrenDonVi(giaBanTrenDonVi)))
-		  throw new InvalidAttributeValueException("Sai thông tin mặt hàng");
+		this.id = id;
 		this.tenMatHang = tenMatHang;
 		this.loaiHang = loaiHang;
 		this.donViTinh = donViTinh;
-
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
-		this.mieuTa = mieuTa;
 	}
 
 	public int getId() {

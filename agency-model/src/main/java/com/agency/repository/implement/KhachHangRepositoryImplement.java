@@ -101,11 +101,7 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 
 	}
 
-	// ?
-	public void delete(KhachHang entity) {
-		// TODO Auto-generated method stub
-
-	}
+	
 	
 	// tested
 	public void deleteById(Integer id) {

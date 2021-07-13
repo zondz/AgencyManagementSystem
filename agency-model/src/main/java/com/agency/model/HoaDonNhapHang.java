@@ -29,6 +29,11 @@ public HoaDonNhapHang(int id, int idNhaCungCap, List<HoaDonNhapHangOrderLine> or
 	this.ngayCungCap = ngayCungCap;
 	this.tongTien = this.calculateTongTien(orderLines);
 }
+public HoaDonNhapHang(int id2, int idNhaCungCap2, LocalDate ngayCungCap2) {
+	this.id = id2;
+	this.idNhaCungCap = idNhaCungCap2;
+	this.ngayCungCap= ngayCungCap2;
+}
 public int getId() {
 	return id;
 }

@@ -15,9 +15,9 @@ Foreign key (id_loai_hang) references LoaiHang(id)
 
 Create table TrangThaiHoaDon(
 id Integer NOT NULL PRIMARY KEY AUTO_INCREMENT ,
-trang_thai Varchar(10)
+trang_thai Varchar(20)
 )
-
+Drop table TrangThaiHoaDon
 drop table HoaDonXuatHang
 Create table HoaDonXuatHang(
 id Integer PRIMARY KEY NOT Null Auto_increment ,
@@ -27,9 +27,9 @@ dat_truoc Integer ,
 id_trang_thai_hoa_don Integer NOT NULL,
 giam_gia Integer NOT NULL,
 foreign key (id_khach_hang) references KhachHang(id) ON DELETE SET NULL,
-foreign key(id_trang_thai_hoa_don) references TrangThaiHoaDon(id)
+foreign key(id_trang_thai_hoa_don) references TrangThaiHoaDon(id) ON DELETE CASCADE
 )
-
+drop table HoaDonXuatHang
 create table HoaDonXuatHangOrderLine(
 id Integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_hoa_don INTEGER NOT NULL ,
@@ -40,6 +40,7 @@ gia_khong Double ,
 foreign key (id_hoa_don) references HoaDonXuatHang(id) ON DELETE CASCADE,
 foreign key(id_mat_hang) references MatHang(id) ON DELETE SET NULL 
 )
+Drop table HoaDonXuatHangOrderLine
 
 Create table MieuTa(
 id Integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -97,4 +98,16 @@ foreign key (id_mat_hang) references MatHang(id) ON DELETE SET NULL
 )
 drop table HoaDonNhapHangOrderLine
 
-loaihang
+insert into TrangThaiHoaDon(trang_thai)VALUES("ĐãThanhToán"),("CònNợ")
+
+Select * from TrangThaiHoaDon
+Select * from HoaDonXuatHang
+Select * From HoaDonXuatHangOrderLine
+select * from MatHang
+Select * from LoaiHang
+Select * from MieuTa
+Select * from HoaDonNhapHang
+Select* from CongViec
+Select * from ThoCongViec
+insert Into LoaiHang(loai_hang)VALUES("HộpQueHàn"),("Keo"),("Ống"),("BảnMã"),("ChổiSơn"),("Sơn"),("TúiVít"),("Nhựa"),("Alu"),("Sắt"),("Tôn"),("TấmBêTông");
+alter table HoaDonXuatHangOrderLine rename column id_hoa_don to id_hoa_don_xuat_hang

@@ -8,7 +8,6 @@ public interface GenericServiceRepository<I extends Serializable, E extends Seri
 	E getById(I id);
 	void add(E entity);
 	void update(E entity);
-	
 	void deleteById(I id);
 	
 }

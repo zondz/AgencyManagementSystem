@@ -11,6 +11,8 @@ public class ThoCongViec implements Serializable {
 	private int idCongViec;
 	private int congTho;
 
+	
+	
 	public ThoCongViec(int id, int idTho, int idCongViec, int congTho) throws InvalidAttributeValueException {
 		super();
 		if (!this.validateCongTho(congTho))

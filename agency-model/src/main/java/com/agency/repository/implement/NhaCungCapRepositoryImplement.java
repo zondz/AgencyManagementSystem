@@ -102,13 +102,6 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 		database.executeSQLNotReturningResultSet(vSQL);
 	}
 
-	
-	// ?
-	public void delete(NhaCungCap entity) {
-		// TODO Auto-generated method stub
-
-	}
-
 	// tested
 	public void deleteById(Integer id) {
 		String vSQL = "DELETE FROM NhaCungCap WHERE id = "+id;

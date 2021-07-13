@@ -40,13 +40,12 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	}
 	
 	
-	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, double donGia,int giaKhong
-			) {
+
+	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong, double donGia, int giaKhong) {
 		super();
 		this.id = id;
 		this.idHoaDon = idHoaDon;
 		this.idMatHang = idMatHang;
-		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.giaKhong = giaKhong;
@@ -55,8 +54,6 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 		}
 		else{this.thanhTien = soLuong*donGia;}
 	}
-	
-	
 	public HoaDonXuatHangOrderLine() {
 		// TODO Auto-generated constructor stub
 	}

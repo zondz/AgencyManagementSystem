@@ -14,12 +14,25 @@ public class CongViec implements Serializable {
 	public static final int MIN_TONG_CONG_THO = 0;
 	private int id;
 	private int idKhachHang;
-
+	// moi co cai nay
+	private int idHoaDonXuatHang;
 	private String tenCongViec;
 	private double tongChiPhiMatHang;
 	private double tongCongTho;
 	private LocalDate ngayBatDau;
 	private List<MatHangChoCongViec> cacMatHangChoCongViec;
+
+	
+	
+
+	public CongViec(int id, int idKhachHang, int idHoaDonXuatHang, String tenCongViec, LocalDate ngayBatDau) {
+		super();
+		this.id = id;
+		this.idKhachHang = idKhachHang;
+		this.idHoaDonXuatHang = idHoaDonXuatHang;
+		this.tenCongViec = tenCongViec;
+		this.ngayBatDau = ngayBatDau;
+	}
 
 	public CongViec(int id, int idKhachHang, String tenCongViec, double tongChiPhiMatHang,
 			double tongCongTho, LocalDate ngayBatDau) throws InvalidAttributeValueException {
@@ -37,7 +50,7 @@ public class CongViec implements Serializable {
 		this.ngayBatDau = ngayBatDau;
 		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
 	}
-
+	
 	public CongViec(int idKhachHang, String tenCongViec, double tongChiPhiMatHang, double tongCongTho,
 			LocalDate ngayBatDau) throws InvalidAttributeValueException {
 		super();
@@ -52,6 +65,14 @@ public class CongViec implements Serializable {
 		this.tongCongTho = tongCongTho;
 		this.ngayBatDau = ngayBatDau;
 		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
+	}
+
+	public int getIdHoaDonXuatHang() {
+		return idHoaDonXuatHang;
+	}
+
+	public void setIdHoaDonXuatHang(int idHoaDonXuatHang) {
+		this.idHoaDonXuatHang = idHoaDonXuatHang;
 	}
 
 	public int getId() {

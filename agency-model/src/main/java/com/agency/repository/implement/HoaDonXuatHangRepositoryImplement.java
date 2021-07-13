@@ -9,16 +9,16 @@ import com.agency.model.HoaDonXuatHang;
 import com.agency.model.HoaDonXuatHangOrderLine;
 import com.agency.model.TrangThaiHoaDon;
 import com.agency.model.database.Database;
-import com.agency.repository.HoaDonXuatHangOrderLineRepository;
+
 import com.agency.repository.HoaDonXuatHangRepository;
 
 public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangRepository{
 	Database database;
-	HoaDonXuatHangOrderLineRepository hoaDonXuatHangOrderLineRepository;
+	
 	public HoaDonXuatHangRepositoryImplement() {
 		// TODO Auto-generated constructor stub
 		database = Database.getInstance();
-		hoaDonXuatHangOrderLineRepository = new HoaDonXuatHangOrderLineRepositoryImplement();
+		
 	}
 	
 	//tested
