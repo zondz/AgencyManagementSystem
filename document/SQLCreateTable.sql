@@ -109,5 +109,18 @@ Select * from MieuTa
 Select * from HoaDonNhapHang
 Select* from CongViec
 Select * from ThoCongViec
+Select * from KhachHang
 insert Into LoaiHang(loai_hang)VALUES("HộpQueHàn"),("Keo"),("Ống"),("BảnMã"),("ChổiSơn"),("Sơn"),("TúiVít"),("Nhựa"),("Alu"),("Sắt"),("Tôn"),("TấmBêTông");
 alter table HoaDonXuatHangOrderLine rename column id_hoa_don to id_hoa_don_xuat_hang
+alter table CongViec add column id_hoa_don_xuat_hang Integer references HoaDonXuatHang(id) ON DELETE SET NULL
+Insert into HoaDonXuathang(id_khach_hang,tien_van_chuyen,dat_truoc,id_trang_thai_hoa_don,giam_gia)VALUES(1 , 50000 , 20000, 1 , 5000) 
+Select * from MatHang
+Select * from HoaDonXuatHangOrderLine
+Insert into HoaDonXuathangOrderLine(id_hoa_don_xuat_hang,id_mat_hang,so_luong,gia_khong)VALUES (3,1,3,70000)
+Insert into MatHang(ten_mat_hang,id_loai_hang,don_vi_tinh,so_luong_ton_kho,gia_niem_yet) VALUES ("Mặt Hàng 1 " ,1 ,"mét",10,50000)
+alter table HoaDonXuatHangOrderLine Drop Column don_gia;
+ update CongViec Set id_khach_hang =2 ,ten_cong_viec= "Tên công việc updated", ngay_bat_dau =STR_TO_DATE( "2021-7-14","%Y-%m-%d"),id_hoa_don_xuat_hang= 11 Where id = 2
+ Select * from HoaDonXuatHang
+ update CongViec Set id_hoa_don_xuat_hang = 3 Where id = 2;
+ update CongViec Set id_khach_hang =2, ten_cong_viec= "Tên công việc updated", ngay_bat_dau = STR_TO_DATE("2021-07-14"," %Y-%m-%d " ),id_hoa_don_xuat_hang= 17 Where id = 2
+ update CongViec Set id_khach_hang =2, ten_cong_viec= "Tên công việc updated", ngay_bat_dau = STR_TO_DATE("2021-07-14","%Y-%m-%d "),id_hoa_don_xuat_hang= 3 Where id = 2;

@@ -1,7 +1,7 @@
 package com.agency.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.management.InvalidAttributeValueException;
@@ -13,19 +13,21 @@ public class HoaDonXuatHang implements Serializable {
 
 	private int id;
 	private int idKhachHang;
-
 	private int vanChuyen;
 	private double tongCong;
 	private int datTruoc;
 	private int giamGia;
 	private double conLai ;
+
 	private TrangThaiHoaDon trangThaiHoaDon;
+	private LocalDate ngayViet;
+
 	private List<HoaDonXuatHangOrderLine> orderLines;
 	
 
 	
 	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen, int datTruoc, int giamGia,
-			TrangThaiHoaDon trangThaiHoaDon) {
+			TrangThaiHoaDon trangThaiHoaDon,  LocalDate ngayViet) {
 		super();
 		this.id = id;
 		this.idKhachHang = idKhachHang;
@@ -33,6 +35,30 @@ public class HoaDonXuatHang implements Serializable {
 		this.datTruoc = datTruoc;
 		this.giamGia = giamGia;
 		this.trangThaiHoaDon = trangThaiHoaDon;
+		
+	}
+
+
+	// view
+
+	public HoaDonXuatHang(int vanChuyen, int datTruoc, int giamGia,
+			LocalDate ngayViet , List<HoaDonXuatHangOrderLine> orderLines) {
+		super();
+		this.vanChuyen = vanChuyen;
+		this.datTruoc = datTruoc;
+		this.giamGia = giamGia;
+		this.ngayViet = ngayViet;
+		this.orderLines = orderLines;
+		// không tính ở đây
+//		this.tongCong = this.calTongCong();
+//		this.conLai = this.tongCong - this.datTruoc-giamGia;
+//		if(conLai < this.tongCong) {
+//			this.trangThaiHoaDon = TrangThaiHoaDon.CònNợ;
+//		}
+//		else {
+//			this.trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
+//		}
+		
 	}
 
 
@@ -60,7 +86,7 @@ public class HoaDonXuatHang implements Serializable {
 	}
 	
 	
-
+	
 
 	// lay du lieu len
 	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen,List<HoaDonXuatHangOrderLine> orderLines,int giamGia, int datTruoc
@@ -86,6 +112,20 @@ public class HoaDonXuatHang implements Serializable {
 	}
 
 	
+
+	public LocalDate getNgayViet() {
+		return ngayViet;
+	}
+
+
+
+
+	public void setNgayViet(LocalDate ngayViet) {
+		this.ngayViet = ngayViet;
+	}
+
+
+
 
 	public int getGiamGia() {
 		return giamGia;
@@ -135,9 +175,7 @@ public class HoaDonXuatHang implements Serializable {
 	public double getTongCong() {
 		return tongCong;
 	}
-	public void setTongCong(double tongCong) throws InvalidAttributeValueException {
-		if(!this.validateTongCong(tongCong)) throw new InvalidAttributeValueException("Sai thông tin tổng cộng tiền: "+tongCong);
-		//
+	public void setTongCong(double tongCong)  {
 		this.tongCong = tongCong;
 	}
 	public double getDatTruoc() {
@@ -155,6 +193,8 @@ public class HoaDonXuatHang implements Serializable {
 		return orderLines;
 	}
 	public void setOrderLines(List<HoaDonXuatHangOrderLine> orderLines) {
+		
+		
 		this.orderLines = orderLines;
 	}
 	// validate
@@ -164,6 +204,7 @@ public class HoaDonXuatHang implements Serializable {
 			sum += this.orderLines.get(i).getThanhTien();
 		}
 		sum += this.vanChuyen;
+		
 		return sum;
 		
 	}
@@ -180,12 +221,17 @@ public class HoaDonXuatHang implements Serializable {
 	}
 
 
+
+
 	@Override
 	public String toString() {
-		return "HoaDonMuaHang [id=" + id + ", idKhachHang=" + idKhachHang + ", vanChuyen=" + vanChuyen + ", tongCong="
-				+ tongCong + ", datTruoc=" + datTruoc + ", conLai=" + conLai + ", orderLines=" + orderLines + "]";
+		return "HoaDonXuatHang [id=" + id + ", idKhachHang=" + idKhachHang + ", vanChuyen=" + vanChuyen + ", tongCong="
+				+ tongCong + ", datTruoc=" + datTruoc + ", giamGia=" + giamGia + ", conLai=" + conLai
+				+ ", trangThaiHoaDon=" + trangThaiHoaDon + ", orderLines=" + orderLines + "]";
 	}
-	
+
+
+
 	
 	
 }

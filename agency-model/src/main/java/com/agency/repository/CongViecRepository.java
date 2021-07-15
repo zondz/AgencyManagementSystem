@@ -8,7 +8,8 @@ import com.agency.model.ThoCongViec;
 
 
 public interface CongViecRepository extends GenericRepository<Integer ,CongViec>{
-	public void createCongViec(CongViec entity, List<ThoCongViec> thoCongViecList );
-	public List<ThoCongViec> getCongViecThoByIdCongViec(Integer id);
-	public void updateThoCongViecChoMotCongViec(List<ThoCongViec> thoCongViecList);
+
+
+	CongViec findByIdKhachHangAndIdHoaDonXuatHang(int idKhachHang, int idNewHoaDonXuatHang);
+	
 }

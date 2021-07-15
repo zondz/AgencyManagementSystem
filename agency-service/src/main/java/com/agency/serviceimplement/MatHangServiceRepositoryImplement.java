@@ -22,7 +22,7 @@ public class MatHangServiceRepositoryImplement implements MatHangServiceReposito
 	@Override
 	public MatHang getById(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return matHangRepository.get(id);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class CongViec implements Serializable {
 	private double tongChiPhiMatHang;
 	private double tongCongTho;
 	private LocalDate ngayBatDau;
-	private List<MatHangChoCongViec> cacMatHangChoCongViec;
+
 
 	
 	
@@ -34,38 +34,17 @@ public class CongViec implements Serializable {
 		this.ngayBatDau = ngayBatDau;
 	}
 
-	public CongViec(int id, int idKhachHang, String tenCongViec, double tongChiPhiMatHang,
-			double tongCongTho, LocalDate ngayBatDau) throws InvalidAttributeValueException {
-		super();
-		if (!(this.validateTenCongViec(tenCongViec) && this.validateTongChiPhiMatHang(tongChiPhiMatHang)
-				&& this.validateTongCongTho(tongCongTho)))
-			throw new InvalidAttributeValueException("Thông tin công việc không hợp lệ");
-
-		this.id = id;
-		this.idKhachHang = idKhachHang;
 	
+	
+	//view 
+	public CongViec(String tenCongViec, LocalDate ngayBatDau) {
 		this.tenCongViec = tenCongViec;
-		this.tongChiPhiMatHang = tongChiPhiMatHang;
-		this.tongCongTho = tongCongTho;
 		this.ngayBatDau = ngayBatDau;
-		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
+		
 	}
-	
-	public CongViec(int idKhachHang, String tenCongViec, double tongChiPhiMatHang, double tongCongTho,
-			LocalDate ngayBatDau) throws InvalidAttributeValueException {
-		super();
-		if (!(this.validateTenCongViec(tenCongViec) && this.validateTongChiPhiMatHang(tongChiPhiMatHang)
-				&& this.validateTongCongTho(tongCongTho)))
-			throw new InvalidAttributeValueException("Thông tin công việc không hợp lệ");
 
-		this.idKhachHang = idKhachHang;
-	
-		this.tenCongViec = tenCongViec;
-		this.tongChiPhiMatHang = tongChiPhiMatHang;
-		this.tongCongTho = tongCongTho;
-		this.ngayBatDau = ngayBatDau;
-		this.cacMatHangChoCongViec = new ArrayList<MatHangChoCongViec>();
-	}
+
+
 
 	public int getIdHoaDonXuatHang() {
 		return idHoaDonXuatHang;
@@ -96,9 +75,8 @@ public class CongViec implements Serializable {
 		return tenCongViec;
 	}
 
-	public void setTenCongViec(String tenCongViec) throws InvalidAttributeValueException {
-		if (!this.validateTenCongViec(tenCongViec))
-			throw new InvalidAttributeValueException("Tên công việc không hợp lệ : " + tenCongViec);
+	public void setTenCongViec(String tenCongViec) {
+		
 		this.tenCongViec = tenCongViec;
 	}
 
@@ -106,9 +84,8 @@ public class CongViec implements Serializable {
 		return tongChiPhiMatHang;
 	}
 
-	public void setTongChiPhiMatHang(double tongChiPhiMatHang) throws InvalidAttributeValueException {
-		if (!this.validateTongChiPhiMatHang(tongChiPhiMatHang))
-			throw new InvalidAttributeValueException("Tổng chi phí mặt hàng không hợp lệ: " + tongChiPhiMatHang);
+	public void setTongChiPhiMatHang(double tongChiPhiMatHang)  {
+	
 
 		this.tongChiPhiMatHang = tongChiPhiMatHang;
 	}
@@ -117,19 +94,12 @@ public class CongViec implements Serializable {
 		return tongCongTho;
 	}
 
-	public void setTongCongTho(double tongCongTho) throws InvalidAttributeValueException {
-		if (!this.validateTongCongTho(tongCongTho))
-			throw new InvalidAttributeValueException("tổng công thợ không hợp lệ: " + tongCongTho);
+	public void setTongCongTho(double tongCongTho) {
+
 		this.tongCongTho = tongCongTho;
 	}
 
-	public List<MatHangChoCongViec> getCacMatHangChoCongViec() {
-		return cacMatHangChoCongViec;
-	}
-
-	public void setCacMatHangChoCongViec(List<MatHangChoCongViec> cacMatHangChoCongViec) {
-		this.cacMatHangChoCongViec = cacMatHangChoCongViec;
-	}
+	
 
 	public LocalDate getNgayBatDau() {
 		return ngayBatDau;
@@ -152,11 +122,15 @@ public class CongViec implements Serializable {
 		return tongCongTho >= this.MIN_TONG_CONG_THO;
 	}
 
+
+
+
 	@Override
 	public String toString() {
-		return "CongViec [id=" + id + ", idKhachHang=" + idKhachHang + ",   tenCongViec="
-				+ tenCongViec + ", tongChiPhiMatHang=" + tongChiPhiMatHang + ", tongCongTho=" + tongCongTho
-				+ ", cacMatHangChoCongViec=" + cacMatHangChoCongViec + "]";
+		return "CongViec [id=" + id + ", idKhachHang=" + idKhachHang + ", idHoaDonXuatHang=" + idHoaDonXuatHang
+				+ ", tenCongViec=" + tenCongViec + ", tongChiPhiMatHang=" + tongChiPhiMatHang + ", tongCongTho="
+				+ tongCongTho + ", ngayBatDau=" + ngayBatDau + "]";
 	}
+
 
 }

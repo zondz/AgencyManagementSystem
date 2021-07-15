@@ -44,4 +44,22 @@ public class KhachHangServiceRepositoryImplement implements KhachHangServiceRepo
 		khachHangRepository.deleteById(id);
 	}
 
+	@Override
+	public boolean checkDuplicateUser(String phoneNumber) {
+		// TODO Auto-generated method stub
+		return khachHangRepository.checkDuplicateUserByPhoneNumber(phoneNumber);
+	}
+
+	@Override
+	public KhachHang getLastRecord() {
+		// TODO Auto-generated method stub
+		return khachHangRepository.getLastRecord();
+	}
+
+	@Override
+	public KhachHang findByPhoneNumber(String phoneNumber) {
+		// TODO Auto-generated method stub
+		return khachHangRepository.findByPhoneNumber(phoneNumber);
+	}
+
 }

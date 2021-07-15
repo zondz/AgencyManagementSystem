@@ -2,14 +2,13 @@ package com.agency.repository.implement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.agency.model.HoaDonXuatHang;
-import com.agency.model.HoaDonXuatHangOrderLine;
 import com.agency.model.TrangThaiHoaDon;
 import com.agency.model.database.Database;
-
 import com.agency.repository.HoaDonXuatHangRepository;
 
 public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangRepository{
@@ -35,8 +34,8 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 			int idTrangThaiHoaDon;
 			TrangThaiHoaDon trangThaiHoaDon;
 			int giamGia;
+			LocalDate ngayViet;
 			HoaDonXuatHang hoaDonXuatHang = null;
-			List<HoaDonXuatHangOrderLine>  hoaDonOrderLine = null;
 	
 			while(rs.next()) {
 				id = rs.getInt("id");
@@ -45,13 +44,14 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 				datTruoc = rs.getInt("dat_truoc");
 				giamGia = rs.getInt("giam_gia");
 				idTrangThaiHoaDon = rs.getInt("id_trang_thai_hoa_don");
+				ngayViet = rs.getDate("ngay_viet").toLocalDate();
 				if(idTrangThaiHoaDon == 1) {
 					trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
 				}else {
 					trangThaiHoaDon = TrangThaiHoaDon.CònNợ;
 				}
 				// id , idKhachHang,vanChuyen , orderLine, giam gia , dat truoc
-				hoaDonXuatHang = new HoaDonXuatHang(id,idKhachHang,tienVanChuyen,datTruoc,giamGia,trangThaiHoaDon);
+				hoaDonXuatHang = new HoaDonXuatHang(id,idKhachHang,tienVanChuyen,datTruoc,giamGia,trangThaiHoaDon,ngayViet);
 				list.add(hoaDonXuatHang);
 			}
 		} catch (SQLException e) {
@@ -75,6 +75,7 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 			int datTruoc;
 			int idTrangThaiHoaDon;
 			TrangThaiHoaDon trangThaiHoaDon;
+			LocalDate ngayViet;
 			int giamGia;
 			while(rs.next()) {
 				idHoaDon = rs.getInt("id");
@@ -83,13 +84,14 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 				datTruoc = rs.getInt("dat_truoc");
 				giamGia = rs.getInt("giam_gia");
 				idTrangThaiHoaDon = rs.getInt("id_trang_thai_hoa_don");
+				ngayViet = rs.getDate("ngay_viet").toLocalDate();
 				if(idTrangThaiHoaDon == 1) {
 					trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
 				}else {
 					trangThaiHoaDon = TrangThaiHoaDon.CònNợ;
 				}
 				// id , idKhachHang,vanChuyen , orderLine, giam gia , dat truoc
-				hoaDonXuatHang = new HoaDonXuatHang(idHoaDon,idKhachHang,tienVanChuyen,datTruoc,giamGia,trangThaiHoaDon);
+				hoaDonXuatHang = new HoaDonXuatHang(idHoaDon,idKhachHang,tienVanChuyen,datTruoc,giamGia,trangThaiHoaDon,ngayViet);
 				
 				
 				
@@ -104,7 +106,6 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 	// tested
 	@Override
 	public void add(HoaDonXuatHang entity) {
-		System.out.println("In add");
 		
 		int idTrangThaiHoaDon = 0;
 		TrangThaiHoaDon status = entity.getTrangThaiHoaDon();
@@ -124,10 +125,9 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 				
 			}
 		}
-		System.out.println("id Trạng thái hóa đơn: "+idTrangThaiHoaDon);
-		String vSQL  = "Insert into HoaDonXuatHang(id_khach_hang,tien_van_chuyen,dat_truoc,id_trang_thai_hoa_don,giam_gia)VALUES("
+		String vSQL  = "Insert into HoaDonXuatHang(id_khach_hang,tien_van_chuyen,dat_truoc,id_trang_thai_hoa_don,giam_gia,ngay_viet)VALUES("
 				+ entity.getIdKhachHang()+","+entity.getVanChuyen()+","+entity.getDatTruoc()+","+idTrangThaiHoaDon+","+entity.getGiamGia()
-				+")";
+			+","+"STR_TO_DATE("+"\""+entity.getNgayViet()+"\""+","+"\""+"%Y-%m-%d" +"\""	+")"+")";
 		
 		database.executeSQLNotReturningResultSet(vSQL);
 		
@@ -152,6 +152,45 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 		String vSQL = "Delete from HoaDonXuatHang Where id  = "+id;
 		this.database.executeSQLNotReturningResultSet(vSQL);
 		
+	}
+
+	@Override
+	public HoaDonXuatHang findByIdKhacHangAndNgayViet(int idKhachHang, LocalDate ngayViet) {
+		String vSQL = "Select * from HoaDonXuatHang Where id_khach_hang ="+idKhachHang+" "+"AND ngay_viet ="+"STR_TO_DATE("+
+					"\""+ngayViet+"\""+","+"\""+"%Y-%m-%d"+"\""+")";
+		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
+		HoaDonXuatHang hoaDonXuatHang = null;
+		try {
+			int id ;
+			int idKhach;
+			int tienVanChuyen;
+			int datTruoc;
+			int idTrangThaiHoaDon;
+			TrangThaiHoaDon status;
+			int giamGia;
+			LocalDate ngayVietHoaDon;
+			while(rs.next()) {
+				id = rs.getInt("id");
+				idKhach  =rs.getInt("id_khach_hang");
+				tienVanChuyen = rs.getInt("tien_van_chuyen");
+				datTruoc = rs.getInt("dat_truoc");
+				idTrangThaiHoaDon  = rs.getInt("id_trang_thai_hoa_don");
+				if(idTrangThaiHoaDon==1) {
+					status= TrangThaiHoaDon.ĐãThanhToán;
+				}
+				else {
+					status = TrangThaiHoaDon.CònNợ;
+				}
+				giamGia = rs.getInt("giam_gia");
+				ngayVietHoaDon = rs.getDate("ngay_viet").toLocalDate();
+				hoaDonXuatHang = new HoaDonXuatHang(id,idKhach,tienVanChuyen,datTruoc,giamGia,status,ngayVietHoaDon);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return hoaDonXuatHang;
 	}
 
 }

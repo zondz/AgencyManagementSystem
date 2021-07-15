@@ -33,11 +33,9 @@ public class KhachHang implements Serializable {
 		this.diaChi = diaChi;
 	}
 
-	public KhachHang(String tenKhachHang, String soDienThoai, String diaChi) throws InvalidAttributeValueException {
+	public KhachHang(String tenKhachHang, String soDienThoai, String diaChi) {
 		super();
-		if (!(this.validateTenKhachHang(tenKhachHang) && this.validateSoDienThoai(soDienThoai)
-				&& this.validateDiaChi(diaChi)))
-			throw new InvalidAttributeValueException("Thông tin khách hàng sai");
+		
 		this.tenKhachHang = tenKhachHang;
 		this.soDienThoai = soDienThoai;
 		this.diaChi = diaChi;

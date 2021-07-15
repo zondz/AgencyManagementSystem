@@ -22,6 +22,34 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	public int getIdHoaDon() {
 		return idHoaDon;
 	}
+	
+	
+	// constructor for view
+	public HoaDonXuatHangOrderLine(int idMatHang, int soLuong, int giaKhong) {
+		super();
+		this.idMatHang = idMatHang;
+		this.soLuong = soLuong;
+		this.giaKhong = giaKhong;
+	}
+
+
+
+	public HoaDonXuatHangOrderLine(int idMatHang, int soLuong, double donGia, int giaKhong) {
+		super();
+		this.idMatHang = idMatHang;
+		this.soLuong = soLuong;
+		this.donGia = donGia;
+		this.giaKhong = giaKhong;
+		if(giaKhong!=0) {
+			this.thanhTien = giaKhong*soLuong;
+			
+		}
+		else {
+			this.thanhTien = donGia*soLuong;
+		}
+	}
+
+
 	// day xuong database
 	public HoaDonXuatHangOrderLine( int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, double donGia, int giaKhong
 			) {
@@ -95,8 +123,7 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	public double getDonGia() {
 		return donGia;
 	}
-	public void setDonGia(double donGia) throws InvalidAttributeValueException {
-		if(!this.validateDonGia(donGia)) throw new InvalidAttributeValueException("Nhập sai đơn giá: "+donGia);
+	public void setDonGia(double donGia)  {
 		this.donGia = donGia;
 	}
 	public double getThanhTien() {

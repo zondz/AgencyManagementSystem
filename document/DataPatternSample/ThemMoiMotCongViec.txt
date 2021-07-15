@@ -1,0 +1,19 @@
+KhachHang khachHang = new KhachHang("khachHang3","01232564646","diaChi3");
+			HoaDonXuatHangOrderLine order1 = new HoaDonXuatHangOrderLine(1, 2, 70000);
+			HoaDonXuatHangOrderLine order2 = new HoaDonXuatHangOrderLine(1, 2, 70000);
+			List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+			orderLines.add(order2);
+			orderLines.add(order1);
+			HoaDonXuatHang hoaDonXuatHang = new HoaDonXuatHang(50000,20000,10000,LocalDate.of(2021, 7, 14),orderLines);
+			
+			List<ThoCongViec> thoCongViecList= new ArrayList<ThoCongViec>();
+			ThoCongViec thoCongViec1 = new ThoCongViec(1,500000);
+			ThoCongViec thoCongViec2 = new ThoCongViec(2,500000);
+			thoCongViecList.add(thoCongViec1);
+			thoCongViecList.add(thoCongViec2);
+			
+			CongViec congViec = new CongViec("Công việc mẫu",LocalDate.of(2021, 7, 14));	
+			
+			CongViecDAO congViecDAO = new CongViecDAO(congViec,thoCongViecList,hoaDonXuatHang,khachHang);
+			// chua test
+			congViecService.add(congViecDAO);

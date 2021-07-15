@@ -1,5 +1,6 @@
 package com.agency.serviceimplement;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.agency.model.HoaDonXuatHang;
@@ -45,6 +46,18 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 	@Override
 	public void deleteById(Integer id) {
 		this.hoaDonXuatHangRepository.deleteById(id);
+	}
+
+	@Override
+	public HoaDonXuatHang getLastRecord() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HoaDonXuatHang findByIdKhacHangAndNgayViet(int idKhachHang, LocalDate ngayViet) {
+		// TODO Auto-generated method stub
+		return hoaDonXuatHangRepository.findByIdKhacHangAndNgayViet(idKhachHang, ngayViet);
 	}
 
 }

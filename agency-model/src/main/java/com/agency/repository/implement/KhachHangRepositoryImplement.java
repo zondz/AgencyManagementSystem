@@ -109,4 +109,72 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 		database.executeSQLNotReturningResultSet(vSQL);
 	}
 
+	@Override
+	public KhachHang getLastRecord() {
+		String vSQL ="SELECT * FROM KhachHang ORDER BY ID DESC LIMIT 1";
+		ResultSet rs =this.database.executeSQLReturningResultSet(vSQL);
+		KhachHang khachHang = null;
+				try {
+					int id;
+					String tenKhachHang;
+					String soDienThoai;
+					String diaChi;
+					while(rs.next()) {
+						id = rs.getInt("id");
+						tenKhachHang = rs.getString("ten_khach_hang");
+						soDienThoai  = rs.getString("so_dien_thoai");
+						diaChi = rs.getString("dia_chi");
+						khachHang = new KhachHang(id,tenKhachHang,soDienThoai,diaChi);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		return khachHang;
+	}
+
+	@Override
+	public KhachHang findByPhoneNumber(String phoneNumber) {
+		String vSQL = "Select * from KhachHang Where so_dien_thoai ="+"\""+phoneNumber+"\"";
+		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
+		KhachHang khachHang = null;
+
+		try {
+			int id;
+			String tenKhachHang;
+			String soDienThoai;
+			String	diaChi;
+			while(rs.next()) {
+				id  = rs.getInt("id");
+				tenKhachHang = rs.getString("ten_khach_hang");
+				soDienThoai = rs.getString("so_dien_thoai");
+				diaChi = rs.getString("dia_chi");
+				khachHang = new KhachHang(id,tenKhachHang,soDienThoai,diaChi);
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return khachHang;
+	}
+
+	@Override
+	public boolean checkDuplicateUserByPhoneNumber(String phoneNumber) {
+		System.out.println("In check duplicate");
+		String vSQL = "Select * from KhachHang Where so_dien_thoai = "+"\""+phoneNumber+"\"";
+		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
+		boolean duplicate = false;
+		try {
+			if(rs.next()==true) {
+				duplicate = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Duplicate ? " +duplicate);
+		return duplicate;
+	}
+
 }

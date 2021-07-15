@@ -13,6 +13,12 @@ public class ThoCongViec implements Serializable {
 
 	
 	
+	public ThoCongViec(int idTho, int congTho) {
+		super();
+		this.idTho = idTho;
+		this.congTho = congTho;
+	}
+
 	public ThoCongViec(int id, int idTho, int idCongViec, int congTho) throws InvalidAttributeValueException {
 		super();
 		if (!this.validateCongTho(congTho))
