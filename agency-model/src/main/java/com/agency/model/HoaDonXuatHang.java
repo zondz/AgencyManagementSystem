@@ -181,8 +181,7 @@ public class HoaDonXuatHang implements Serializable {
 	public double getDatTruoc() {
 		return datTruoc;
 	}
-	public void setDatTruoc(int datTruoc) throws InvalidAttributeValueException {
-		if(!this.validateDatTruoc(datTruoc)) throw new InvalidAttributeValueException("Sai thông tin tiền đặt trước: "+datTruoc);
+	public void setDatTruoc(int datTruoc)  {
 		this.datTruoc = datTruoc;
 	}
 	public double getConLai() {

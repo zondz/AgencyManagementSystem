@@ -67,8 +67,7 @@ public class ThoCongViec implements Serializable {
 		return congTho;
 	}
 
-	public void setCongTho(int congTho) throws InvalidAttributeValueException {
-		if(!this.validateCongTho(congTho)) throw new InvalidAttributeValueException("Công thợ không hợp lệ: "+congTho);
+	public void setCongTho(int congTho) {
 
 		this.congTho = congTho;
 	}

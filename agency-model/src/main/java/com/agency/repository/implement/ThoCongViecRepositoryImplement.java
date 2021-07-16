@@ -77,16 +77,18 @@ public class ThoCongViecRepositoryImplement implements ThoCongViecRepository {
 	public void add(ThoCongViec entity) {
 		String vSQL = " Insert into ThoCongViec(id_tho,id_cong_viec,cong_tho)VALUES(" + entity.getIdTho() + ","
 				+ entity.getIdCongViec() + "," + entity.getCongTho()+");";
-		System.out.println(vSQL);
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
 
 	@Override
 	public void update(ThoCongViec entity) {
 		String vSQL = "Update ThoCongViec Set id_tho= " + entity.getIdTho() + ",id_cong_viec = "
-				+ entity.getIdCongViec() + ",cong_tho= " + entity.getCongTho()
+				+ entity.getIdCongViec() + ",cong_tho= " + entity.getCongTho() + " "
 
 				+ "where id = " + entity.getId();
+		
+		System.out.println("update SQL" +vSQL);
+		
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
 	

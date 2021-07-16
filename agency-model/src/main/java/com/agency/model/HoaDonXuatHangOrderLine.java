@@ -32,22 +32,7 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 		this.giaKhong = giaKhong;
 	}
 
-
-
-	public HoaDonXuatHangOrderLine(int idMatHang, int soLuong, double donGia, int giaKhong) {
-		super();
-		this.idMatHang = idMatHang;
-		this.soLuong = soLuong;
-		this.donGia = donGia;
-		this.giaKhong = giaKhong;
-		if(giaKhong!=0) {
-			this.thanhTien = giaKhong*soLuong;
-			
-		}
-		else {
-			this.thanhTien = donGia*soLuong;
-		}
-	}
+	
 
 
 	// day xuong database
@@ -69,18 +54,14 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	
 	
 
-	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong, double donGia, int giaKhong) {
+	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong,  int giaKhong) {
 		super();
 		this.id = id;
 		this.idHoaDon = idHoaDon;
 		this.idMatHang = idMatHang;
 		this.soLuong = soLuong;
-		this.donGia = donGia;
 		this.giaKhong = giaKhong;
-		if(giaKhong!=0) {
-			this.thanhTien = soLuong*giaKhong;
-		}
-		else{this.thanhTien = soLuong*donGia;}
+	
 	}
 	public HoaDonXuatHangOrderLine() {
 		// TODO Auto-generated constructor stub
@@ -116,8 +97,7 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	public int getSoLuong() {
 		return soLuong;
 	}
-	public void setSoLuong(int soLuong) throws InvalidAttributeValueException {
-		if(!this.validateSoLuong(soLuong)) throw new InvalidAttributeValueException("Nhập sai số lượng : "+soLuong);
+	public void setSoLuong(int soLuong)  {
 		this.soLuong = soLuong;
 	}
 	public double getDonGia() {

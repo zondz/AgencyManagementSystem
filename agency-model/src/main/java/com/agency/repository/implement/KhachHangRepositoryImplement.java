@@ -161,7 +161,7 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 
 	@Override
 	public boolean checkDuplicateUserByPhoneNumber(String phoneNumber) {
-		System.out.println("In check duplicate");
+		
 		String vSQL = "Select * from KhachHang Where so_dien_thoai = "+"\""+phoneNumber+"\"";
 		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
 		boolean duplicate = false;
@@ -173,7 +173,6 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Duplicate ? " +duplicate);
 		return duplicate;
 	}
 

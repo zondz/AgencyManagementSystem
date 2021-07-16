@@ -56,8 +56,8 @@ public class CongViecDAO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CongViecDAO [congViec=" + congViec + ", thoCongViecList=" + thoCongViecList + ", hoaDonXuatHang="
-				+ hoaDonXuatHang + ", khachHang=" + khachHang + "]";
+		return "CongViecDAO [congViec=" + congViec +"\n"+ ", thoCongViecList=" + thoCongViecList + ", hoaDonXuatHang="
+				+ hoaDonXuatHang + "\n"+", khachHang=" + khachHang + "]";
 	}
 
 	

@@ -1,0 +1,23 @@
+HoaDonXuatHangDTO hoaDonDTO = hoaDonService.getById(1);
+			KhachHang khachHang = new KhachHang("khachhang4","0912011951","63 truong chinh");
+			
+			HoaDonXuatHang hoaDonXuatHang = hoaDonDTO.getHoaDonXuatHang();
+			hoaDonXuatHang.setDatTruoc(1000000);
+			List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHang.getOrderLines();
+			// fake
+			for(HoaDonXuatHangOrderLine orderLine : orderLines) {
+				System.out.println(orderLine);
+				orderLine.setGiaKhong(0);
+				orderLine.setSoLuong(3);
+			}
+			hoaDonXuatHang.setNgayViet(LocalDate.of(2022, 1, 1));
+			CongViecDAO congViecDAO = congViecService.getById(1);
+			CongViec congViec = congViecDAO.getCongViec();
+			congViec.setTenCongViec("ten cong viec updated");
+			List<ThoCongViec> thoCongViecList = congViecDAO.getThoCongViecList();
+			for(ThoCongViec temp : thoCongViecList) {
+				temp.setCongTho(200000);
+			}
+			CongViecDAO congViecDAOUpdate = new CongViecDAO(congViec,thoCongViecList,hoaDonXuatHang,khachHang);
+
+			congViecService.update(congViecDAOUpdate);

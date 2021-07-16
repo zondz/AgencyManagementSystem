@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.agency.DAO.CongViecDAO;
+import com.agency.DAO.HoaDonXuatHangDTO;
 import com.agency.model.CongViec;
 import com.agency.model.HoaDonXuatHang;
 import com.agency.model.HoaDonXuatHangOrderLine;
@@ -50,35 +51,43 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 	@Override
 	public List<CongViecDAO> getAll() {
 		List<CongViecDAO> congViecDAOList = new ArrayList<CongViecDAO>();
-		// b1
+//		// b1
 		List<CongViec> congViecList = (List<CongViec>) congViecRepository.getAll();
-		
-		
-		List<ThoCongViec> thoCongViecList = null;
-		HoaDonXuatHang hoaDonXuatHang;
+	
 		CongViecDAO congViecDAO = null;
-		// b2
-		for (CongViec cv : congViecList) {
-			thoCongViecList = thoCongViecRepository.getListThoCongViecByIdCongViec(cv.getId());
-			// b3 chua xu ly hoa don xuat hang
-			hoaDonXuatHang = hoaDonXuatHangService.getById(cv.getIdHoaDonXuatHang());
-			
-			// b4
-			KhachHang khachHang = khachHangServiceRepository.getById(cv.getIdKhachHang());
-			
-			// b5
-			cv.setTongChiPhiMatHang(hoaDonXuatHang.getTongCong()-hoaDonXuatHang.getGiamGia());
-			double sumCongTho = 0 ;
-			for(int i = 0 ; i< thoCongViecList.size();i++) {
-				sumCongTho += thoCongViecList.get(i).getCongTho();
-			}
-			cv.setTongCongTho(sumCongTho);
-			
-			congViecDAO = new CongViecDAO(cv, thoCongViecList, hoaDonXuatHang, khachHang);
+		for(CongViec congViec : congViecList) {
+			congViecDAO = this.getById(congViec.getId());
 			congViecDAOList.add(congViecDAO);
-
 		}
+		
 		return congViecDAOList;
+//		
+//		List<ThoCongViec> thoCongViecList = null;
+//		HoaDonXuatHang hoaDonXuatHang;
+//		CongViecDAO congViecDAO = null;
+//		// b2
+//		for (CongViec cv : congViecList) {
+//			thoCongViecList = thoCongViecRepository.getListThoCongViecByIdCongViec(cv.getId());
+//			// b3 chua xu ly hoa don xuat hang
+//			hoaDonXuatHang = hoaDonXuatHangService.getById(cv.getIdHoaDonXuatHang());
+//			
+//			// b4
+//			KhachHang khachHang = khachHangServiceRepository.getById(cv.getIdKhachHang());
+//			
+//			// b5
+//			cv.setTongChiPhiMatHang(hoaDonXuatHang.getTongCong()-hoaDonXuatHang.getGiamGia());
+//			double sumCongTho = 0 ;
+//			for(int i = 0 ; i< thoCongViecList.size();i++) {
+//				sumCongTho += thoCongViecList.get(i).getCongTho();
+//			}
+//			cv.setTongCongTho(sumCongTho);
+//			
+//			congViecDAO = new CongViecDAO(cv, thoCongViecList, hoaDonXuatHang, khachHang);
+//			congViecDAOList.add(congViecDAO);
+//
+//		}
+//		return congViecDAOList;
+//		return null;
 	}
 
 	/**
@@ -95,15 +104,16 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 
 		CongViecDAO congViecDAO = null;
 
-		// b1
+//		// b1
 		CongViec congViec = congViecRepository.get(id);
-		// b2
+//		// b2
 		List<ThoCongViec> thoCongViecList = thoCongViecRepository.getListThoCongViecByIdCongViec(id);
-		// b3
-		HoaDonXuatHang hoaDonXuatHang = hoaDonXuatHangService.getById(congViec.getIdHoaDonXuatHang());
-		// b4
-		KhachHang khachHang = khachHangServiceRepository.getById(congViec.getIdKhachHang());
-		// b5
+//		// b3 hoaDonXuatHang phai lam
+		HoaDonXuatHangDTO hoaDonDTO = hoaDonXuatHangService.getById(congViec.getIdHoaDonXuatHang());
+		HoaDonXuatHang hoaDonXuatHang =hoaDonXuatHangService.getById(congViec.getIdHoaDonXuatHang()).getHoaDonXuatHang();
+//		// b4
+		KhachHang khachHang = hoaDonDTO.getKhachHang();
+//		// b5
 		double sumCongTho = 0 ;
 		for(int i = 0 ; i< thoCongViecList.size();i++) {
 			sumCongTho += thoCongViecList.get(i).getCongTho();
@@ -111,7 +121,7 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 		congViec.setTongCongTho(sumCongTho);
 		
 		congViec.setTongChiPhiMatHang(hoaDonXuatHang.getTongCong()-hoaDonXuatHang.getGiamGia());
-	
+//	
 		congViecDAO = new CongViecDAO(congViec, thoCongViecList, hoaDonXuatHang, khachHang);
 
 		return congViecDAO;
@@ -146,16 +156,11 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 		int idKhachHang = khachHang.getId();
 		
 			HoaDonXuatHang hoaDonXuatHang = entity.getHoaDonXuatHang();
-			// set up lại hóa đơn
-
-			hoaDonXuatHang = this.setupHoaDonXuatHang(hoaDonXuatHang);
 			
-			List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHang.getOrderLines();
-			
-			hoaDonXuatHang.setIdKhachHang(idKhachHang);
-			System.out.println("HoaDonXuatHang trong cong viec service: "+hoaDonXuatHang);
+			// gửi thông tin hóa đơn và khách hàng cho bên Hóa đơn service xử lý
+			HoaDonXuatHangDTO hoaDonXuatHangDTO = new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang);
+			hoaDonXuatHangService.add(hoaDonXuatHangDTO);
 
-			hoaDonXuatHangService.add(hoaDonXuatHang);
 			hoaDonXuatHang = hoaDonXuatHangService.findByIdKhacHangAndNgayViet(idKhachHang,hoaDonXuatHang.getNgayViet());
 			int idNewHoaDonXuatHang = hoaDonXuatHang.getId();
 		// b3  
@@ -183,41 +188,49 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 	 * b1 : check thông tin khách hàng, có thể là mới có thể là cũ
 	 * 		Nếu mới -> cập nhật lại id khach hang của hóa đơn xuất hàng và của công việc
 	 * 	b2   :upate Hóa Đơn Xuất Hàng 
-	 *  b3 : update Công Việc 
+	 *  
 	 *  b4 : update ThoCongViec
+	 *  b3 : update Công Việc 
 	 * 
 	 */
 	
 	@Override
 	public void update(CongViecDAO entity) {
 		// b1
-		boolean oldUser = khachHangServiceRepository.checkDuplicateUser(entity.getKhachHang().getSoDienThoai());
 		KhachHang khachHang = entity.getKhachHang();
+		boolean oldUser = khachHangServiceRepository.checkDuplicateUser(khachHang.getSoDienThoai());
 		if(!oldUser) {
-			khachHangServiceRepository.add(entity.getKhachHang());
+			khachHangServiceRepository.add(khachHang);
 		
 		}
 		khachHang = khachHangServiceRepository.findByPhoneNumber(khachHang.getSoDienThoai());
 		int idKhachHang = khachHang.getId();
-		
+
+
 		HoaDonXuatHang hoaDonXuatHang = entity.getHoaDonXuatHang();
-		hoaDonXuatHang.setIdKhachHang(idKhachHang);
+		HoaDonXuatHangDTO hoaDonXuatHangDTO = new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang);
+		hoaDonXuatHangService.update(hoaDonXuatHangDTO);
+		hoaDonXuatHang = hoaDonXuatHangService.findByIdKhacHangAndNgayViet(idKhachHang, hoaDonXuatHang.getNgayViet());
 		
+		//update ThoCongViec
+		List<ThoCongViec> thoCongViecList = entity.getThoCongViecList();
+		int sumCongTho = 0 ;
+		for(ThoCongViec thoCongViec : thoCongViecList) {
+			sumCongTho+= thoCongViec.getCongTho();
+			thoCongViecRepository.update(thoCongViec);
+		}
+		
+		// update công việc
 		CongViec congViec = entity.getCongViec();
 		congViec.setIdKhachHang(idKhachHang);
-		
-		hoaDonXuatHangService.update(hoaDonXuatHang);
-		
 		congViecRepository.update(congViec);
-		// b4
-		thoCongViecRepository.updateThoCongViecChoMotCongViec(entity.getThoCongViecList());
 		
  
 	}
 	
 	/*
 	 * delete Công Việc By Id
-	 * 
+	 * tested
 	 * *
 	 */
 	@Override
@@ -225,43 +238,7 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 		congViecRepository.deleteById(id);
 
 	}
-	
-	
-	// kiểm tra xem các orderLines 
-	//muốn bán theo giá thực hay giá khống để điều chỉnh hóa đơn
-	// chỉnh donViTinh theo mặt hàng
-	private HoaDonXuatHang setupHoaDonXuatHang(HoaDonXuatHang hoaDon) {
-		List<HoaDonXuatHangOrderLine> orderLines = hoaDon.getOrderLines();
-		
-		int tongCong = 0;
-		for(HoaDonXuatHangOrderLine orderLine : orderLines) {
-			MatHang matHang = matHangService.getById(orderLine.getIdMatHang());
-			orderLine.setDonViTinh(matHang.getDonViTinh());
-			 // kiểm tra xem dùng giá khống hay không
-			if(orderLine.getGiaKhong()==0) {
-				orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
-				orderLine.setThanhTien(orderLine.getDonGia()*orderLine.getSoLuong());
-			}else {
-				orderLine.setThanhTien(orderLine.getGiaKhong()*orderLine.getSoLuong());
-			}
-			tongCong += orderLine.getThanhTien();
-		}
-		
-		
-		// cập nhật hóa đơn
-		tongCong += hoaDon.getVanChuyen();
-		hoaDon.setOrderLines(orderLines);
-		hoaDon.setTongCong(tongCong);
-		hoaDon.setConLai(hoaDon.getTongCong()-hoaDon.getDatTruoc()-hoaDon.getGiamGia());
-		if(hoaDon.getConLai() > 0) {
-			hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.CònNợ);
-		}
-		else {
-			hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.ĐãThanhToán);
-
-		}
-		
-		return hoaDon;
-	}
-
 }
+	
+	
+	
