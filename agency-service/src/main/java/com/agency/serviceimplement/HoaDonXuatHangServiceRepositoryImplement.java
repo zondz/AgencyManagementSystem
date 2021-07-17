@@ -1,6 +1,7 @@
 package com.agency.serviceimplement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.agency.DAO.HoaDonXuatHangDTO;
@@ -30,51 +31,79 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 		hoaDonXuatHangOrderLineRepository = new HoaDonXuatHangOrderLineRepositoryImplement();
 	}
 	
-	// tested hiện tại cho mỗi phần Hóa Đơn Xuất Hàng , chưa đính kèm orderLine
+	/**
+	 * b1 : lấy tất cả các Hóa đơn trong bảng ở database
+	 * b2 : lấy tất cả các orderLines ở trong bảng database
+	 * b3 : lồng các orderLine vào với các Hóa đơn với id tương ứng 
+	 * b5 : lấy lại thông tin khách hàng
+	 * 	 * b4 : set up lại từng hóa  hóa đơn 
+
+	 * b6 : add các hóa đơn + khách hàng  vào list DTO trả về
+	 *
+	 * 
+	 * 
+	 */
 	@Override
 	public List<HoaDonXuatHangDTO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<HoaDonXuatHangDTO> result = new ArrayList<>();
+		List<HoaDonXuatHang>hoaDonList  = (List<HoaDonXuatHang>) hoaDonXuatHangRepository.getAll();
+		List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHangOrderLineRepository.getAll();
+
+		HoaDonXuatHangDTO hoaDonXuatHangDTO;
+
+		for(HoaDonXuatHang hoaDon : hoaDonList) {
+			
+			KhachHang khachHang = khachHangService.getById(hoaDon.getIdKhachHang());
+			
+			List<HoaDonXuatHangOrderLine> orderLinesForOneHoaDon = new ArrayList<HoaDonXuatHangOrderLine>();
+			
+			for(HoaDonXuatHangOrderLine orderLine : orderLines) {
+				if(orderLine.getIdHoaDon() == hoaDon.getId()) {
+					
+					orderLinesForOneHoaDon.add(orderLine);
+					
+				}
+
+			}
+			
+			hoaDon.setOrderLines(orderLinesForOneHoaDon);
+			hoaDon = this.setUpHoaDonXuatHang(new HoaDonXuatHangDTO(hoaDon,khachHang));
+			hoaDonXuatHangDTO = new HoaDonXuatHangDTO(hoaDon, khachHang);
+			result.add(hoaDonXuatHangDTO);
+		}
+		
+		return result;
 	}
 
-	// 
+	
+	
+	/**
+	 * b1 : lấy hóa đơn với id từ database
+	 * b2 : lấy các orderLines với id hóa đơn
+	 * b3 : lấy thông tin khách hàng
+	 * b4 : set up hóa đơn
+	 * b5 : tạo DTO trả về 
+	 * 
+	 */
 	@Override
 	public HoaDonXuatHangDTO getById(Integer id) {
 	HoaDonXuatHang hoaDon =	hoaDonXuatHangRepository.get(id);
 	List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHangOrderLineRepository.findByHoaDonXuatHangId(id);
-	// chỉnh sửa các thuộc tính của các orderLines để trả về
-	MatHang matHang ;
-	int tongCong = 0;
-	for(HoaDonXuatHangOrderLine orderLine : orderLines) {
-		matHang = matHangService.getById(id);
-		if(orderLine.getGiaKhong()!=0) {
-			orderLine.setThanhTien(orderLine.getSoLuong()*orderLine.getGiaKhong());
-		}
-		else {
-			orderLine.setThanhTien(orderLine.getSoLuong()*matHang.getGiaBanTrenDonVi());
-			
-		}
-		orderLine.setDonViTinh(matHang.getDonViTinh());
-		orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
-		tongCong+=orderLine.getThanhTien();
-		
-	}
-	tongCong+=hoaDon.getVanChuyen();
-	// đính kèm các orderLine vào trong Hóa Đơn
-	hoaDon.setOrderLines(orderLines);
-	hoaDon.setTongCong(tongCong);	
-	hoaDon.setConLai(hoaDon.getTongCong()-hoaDon.getDatTruoc()-hoaDon.getGiamGia());
-
-	// tìm khách hàng trả về 
+	
 	KhachHang khachHang = khachHangService.getById(hoaDon.getIdKhachHang());
+	hoaDon.setOrderLines(orderLines);
+	hoaDon = this.setUpHoaDonXuatHang(new HoaDonXuatHangDTO(hoaDon,khachHang));
 	
 	HoaDonXuatHangDTO hoaDonDTO = new HoaDonXuatHangDTO(hoaDon,khachHang);
+	System.out.println("Hoá đơn xuất hàng service - get by id - finished");
 		return hoaDonDTO;
 	}
+
+	
 	
 	/**
-	 * 2 trường hợp 
-	 * Nhận được hóa đơn từ view ,tạo mới hóa đơn
+	 * 
+	 * 
 	 * Từ công việc gọi
 	 * b1 : add thông tin để tạo một hóa đơn trong bảng hóa đơn
 	 * b2 : lấy lại id của hóa đơn mới
@@ -86,64 +115,103 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 	HoaDonXuatHang hoaDonXuatHang =	this.setUpHoaDonXuatHang(entity);
 	hoaDonXuatHangRepository.add(hoaDonXuatHang);
 	HoaDonXuatHang hoaDonFromDatabase = this.findByIdKhacHangAndNgayViet(hoaDonXuatHang.getIdKhachHang(), hoaDonXuatHang.getNgayViet());
-	System.out.println("hoa don from database : "+hoaDonFromDatabase);
 	
 	hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(hoaDonFromDatabase.getId(),hoaDonXuatHang.getOrderLines() );	
 		System.out.println("Add hóa đơn service finished");
 	}
+
 	
-	// test 1 bảng bên HoaDonXuat Hang , chua Test bên HoaDonXuatHangOrderLine
+	
+	/**
+	 * 
+	 * b1 : set up hóa đơn 
+	 * 
+	 * b2 : cập nhật ở bảng hóa đơn xuất hàng
+	 * 
+	 * b3 : cập nhật ở bảng hóa đơn xuất hàng OrderLines
+	 * 		3 trường hợp 
+	 * 
+	 * th1 : thêm mới một orderline
+	 * th2 : xóa bớt một orderline
+	 * th3 : xóa đi và thêm những cái khác
+	 * b1: lấy các orderLine cũ từ database ra
+	 * b2 : phân loại từng orderline từ view là cũ hay mới dựa vào id của nó
+	 * 2.1 : nếu là mới -> gọi repository để add thêm orderLine
+	 * 2.2 : nếu là cũ -> gọi repository cập nhật
+	 * 
+	 * b3 : tìm ra các orderLine bị xóa trên view bằng cách nhìn vào id -> nếu không trùng -> xóa trong database
+	 * 
+	 */
 	@Override
 	public void update(HoaDonXuatHangDTO entity) {
-		// update khách hàng
-		KhachHang khachHang =entity.getKhachHang();
-		boolean oldUser = khachHangService.checkDuplicateUser(khachHang.getSoDienThoai());
-		if(!oldUser) {
-			khachHangService.add(khachHang);
-		
-		}
-		
 		HoaDonXuatHang hoaDonXuatHang = entity.getHoaDonXuatHang();
-		// update orderLines
-		List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHang.getOrderLines();
-		int sumOrders = 0;
-		MatHang matHang;
-		for(HoaDonXuatHangOrderLine orderLine : orderLines) {
-			matHang = matHangService.getById(orderLine.getIdMatHang());
-			if(orderLine.getGiaKhong()!=0) {
-				orderLine.setThanhTien(orderLine.getSoLuong()*orderLine.getGiaKhong());
-			}
-			else {
-				orderLine.setThanhTien(orderLine.getSoLuong()*matHang.getGiaBanTrenDonVi());
-				
-			}
-			orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
-			orderLine.setDonViTinh(matHang.getDonViTinh());
-			
-			hoaDonXuatHangOrderLineRepository.updateOne(orderLine);
-			sumOrders+=orderLine.getThanhTien();
-			
-		}
-		hoaDonXuatHang.setTongCong(sumOrders + hoaDonXuatHang.getVanChuyen());
-		hoaDonXuatHang.setConLai(hoaDonXuatHang.getTongCong()-hoaDonXuatHang.getDatTruoc()-hoaDonXuatHang.getGiamGia());
-		if(hoaDonXuatHang.getConLai()>0) {
-			hoaDonXuatHang.setTrangThaiHoaDon(TrangThaiHoaDon.CònNợ);
-		}
-		else {
-			hoaDonXuatHang.setTrangThaiHoaDon(TrangThaiHoaDon.ĐãThanhToán);
-		}
+		KhachHang khachHang = entity.getKhachHang();
+		
+		
+		hoaDonXuatHang = this.setUpHoaDonXuatHang(new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang));
+		
 		hoaDonXuatHangRepository.update(hoaDonXuatHang);
 		
-		System.err.println("Hoa Don Xuat Hang update service finished");
+		// old set orderLine
+		List<HoaDonXuatHangOrderLine> oldOrderLines = hoaDonXuatHangOrderLineRepository.findByHoaDonXuatHangId(hoaDonXuatHang.getId());
+		
+		// update set orderLine
+		List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHang.getOrderLines();
+		
+		for(HoaDonXuatHangOrderLine orderLine : oldOrderLines) {
+			boolean keptOrderLine = false;
+
+			for(HoaDonXuatHangOrderLine newOrderLine : orderLines) {
+				if(orderLine.getId()== newOrderLine.getId()) {
+					keptOrderLine = true;				
+				}
+			}
+			
+			if(keptOrderLine==false) {
+				
+				hoaDonXuatHangOrderLineRepository.deleteOneById(orderLine.getId());
+				
+			}
+			
+		}
+		
+		// new orderLine
+		List<HoaDonXuatHangOrderLine> newOrderLines = new ArrayList<>();
+	
+		for(HoaDonXuatHangOrderLine orderLine : orderLines) {
+			
+			if(orderLine.getId()!=0) {
+				
+				hoaDonXuatHangOrderLineRepository.updateOne(orderLine);
+				
+			}
+			else {
+				newOrderLines.add(orderLine);
+				
+			}
+			
+			
+		}
+		
+		hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(hoaDonXuatHang.getId(), newOrderLines);
+		
+		
+		
+		
+		System.out.println("Hoa Don Xuat Hang update service finished");
 		
 		
 	
 	}
 
+	
+	
+	
 	// tested
 	@Override
 	public void deleteById(Integer id) {
 		this.hoaDonXuatHangRepository.deleteById(id);
+		System.out.println("Hoá đơn xuất hàng service - delete by id finished");
 	}
 
 

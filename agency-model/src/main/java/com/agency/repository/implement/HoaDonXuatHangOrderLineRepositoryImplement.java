@@ -71,4 +71,41 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
 
+	@Override
+	public List<HoaDonXuatHangOrderLine> getAll() {
+		String vSQL = "Select * from HoaDonXuatHangOrderLine";
+		List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+		ResultSet rs  = this.database.executeSQLReturningResultSet(vSQL);
+		
+		try {
+			int id;
+			int idHoaDonXuatHang;
+			int idMatHang;
+			int soLuong;
+			int giaKhong;
+			HoaDonXuatHangOrderLine orderLine = null;
+			while(rs.next()) {
+				id = rs.getInt("id");
+				idHoaDonXuatHang = rs.getInt("id_hoa_don_xuat_hang");
+				idMatHang = rs.getInt("id_mat_hang");
+				soLuong = rs.getInt("so_luong");
+				giaKhong = rs.getInt("gia_khong");
+				orderLine  = new HoaDonXuatHangOrderLine(id,idHoaDonXuatHang,idMatHang,soLuong,giaKhong);
+				orderLines.add(orderLine);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return orderLines;
+	}
+
+	@Override
+	public void deleteOneById(int id) {
+		String vSQL = "Delete from HoaDonXuatHangOrderLine Where id = "+id;
+		this.database.executeSQLNotReturningResultSet(vSQL);
+	}
+
+	
+
 }

@@ -26,18 +26,16 @@ public class KhachHangServiceRepositoryImplement implements KhachHangServiceRepo
 	// tested
 	public void add(KhachHang entity) {
 		khachHangRepository.add(entity);
+		System.out.println("Add khách hàng service finished");
 	}
 
+	
+	
 	// tested
 	public void update(KhachHang entity) {
 		khachHangRepository.update(entity);
 	}
 	
-	
-	public void delete(KhachHang entity) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	// tested
 	public void deleteById(Integer id) {

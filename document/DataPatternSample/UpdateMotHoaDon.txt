@@ -1,0 +1,17 @@
+			KhachHang khachHang = khachHangService.getLastRecord();
+			// thêm một orderLine
+			HoaDonXuatHangOrderLine orderLine = new HoaDonXuatHangOrderLine(1,4,50000);
+
+			// xoa id bang 10
+			//HoaDonXuatHangOrderLine orderLine1 = new HoaDonXuatHangOrderLine(10,2,1,4,100000);
+			// sửa một orderLine
+			HoaDonXuatHangOrderLine orderLine2 = new HoaDonXuatHangOrderLine(8,2,1,3,200000);
+			List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+			orderLines.add(orderLine2);
+			orderLines.add(orderLine1);
+			//orderLines.add(orderLine);
+			
+			HoaDonXuatHang hoaDonXuatHang = new HoaDonXuatHang(2,5,30000,orderLines,200000,2200000,LocalDate.of(2021, 7, 19));
+			
+			hoaDonService.update(new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang));
+			

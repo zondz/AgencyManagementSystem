@@ -22,11 +22,9 @@ public class KhachHang implements Serializable {
 	}
 
 	public KhachHang(int id, String tenKhachHang, String soDienThoai, String diaChi)
-			throws InvalidAttributeValueException {
+		 {
 		super();
-		if (!(this.validateTenKhachHang(tenKhachHang) && this.validateSoDienThoai(soDienThoai)
-				&& this.validateDiaChi(diaChi)))
-			throw new InvalidAttributeValueException("Thông tin khách hàng sai");
+		
 		this.id = id;
 		this.tenKhachHang = tenKhachHang;
 		this.soDienThoai = soDienThoai;

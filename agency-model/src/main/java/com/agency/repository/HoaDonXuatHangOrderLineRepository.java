@@ -11,4 +11,10 @@ public interface HoaDonXuatHangOrderLineRepository{
 	
 
 	void updateOne(HoaDonXuatHangOrderLine orderLine);
+
+	List<HoaDonXuatHangOrderLine> getAll();
+
+	void deleteOneById(int id);
+	
+	
 }

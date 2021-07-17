@@ -34,26 +34,6 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 
 	
 
-
-	// day xuong database
-	public HoaDonXuatHangOrderLine( int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, double donGia, int giaKhong
-			) {
-		super();
-
-		this.idHoaDon = idHoaDon;
-		this.idMatHang = idMatHang;
-		this.donViTinh = donViTinh;
-		this.soLuong = soLuong;
-		this.donGia = donGia;
-		this.giaKhong = giaKhong;
-		if(giaKhong!=0) {
-			this.thanhTien = soLuong*giaKhong;
-		}
-		else{this.thanhTien = soLuong*donGia;}
-	}
-	
-	
-
 	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong,  int giaKhong) {
 		super();
 		this.id = id;

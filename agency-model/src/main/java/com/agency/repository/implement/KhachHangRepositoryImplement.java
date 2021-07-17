@@ -39,10 +39,7 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidAttributeValueException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		return khList;
 	}
 
@@ -70,11 +67,7 @@ public class KhachHangRepositoryImplement implements KhachHangRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidAttributeValueException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} 
 		return kh;
 
 	}

@@ -18,7 +18,6 @@ public class HoaDonXuatHang implements Serializable {
 	private int datTruoc;
 	private int giamGia;
 	private double conLai ;
-
 	private TrangThaiHoaDon trangThaiHoaDon;
 	private LocalDate ngayViet;
 
@@ -89,25 +88,17 @@ public class HoaDonXuatHang implements Serializable {
 	
 
 	// lay du lieu len
-	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen,List<HoaDonXuatHangOrderLine> orderLines,int giamGia, int datTruoc
+	public HoaDonXuatHang(int id, int idKhachHang, int vanChuyen,List<HoaDonXuatHangOrderLine> orderLines,int giamGia, int datTruoc,LocalDate ngayViet
 			) {
 		super();
 		this.id = id;
 		this.idKhachHang = idKhachHang;
 		this.vanChuyen = vanChuyen;
 		this.orderLines = orderLines;
-		this.tongCong = this.calTongCong();
+	
 		this.giamGia = giamGia;
 		this.datTruoc = datTruoc;	
-		this.conLai = tongCong -giamGia- datTruoc;
-
-		
-		if(this.conLai>0) {
-			this.trangThaiHoaDon =TrangThaiHoaDon.CònNợ;
-		}
-		else {
-			this.trangThaiHoaDon = TrangThaiHoaDon.ĐãThanhToán;
-		}
+		this.ngayViet = ngayViet;
 		
 	}
 

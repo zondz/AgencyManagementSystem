@@ -1,0 +1,15 @@
+	HoaDonXuatHangServiceRepository hoaDonService = new HoaDonXuatHangServiceRepositoryImplement();
+			KhachHangServiceRepository khachHangService = new KhachHangServiceRepositoryImplement();
+
+			//**************************************************
+			KhachHang khachHang = khachHangService.getLastRecord();
+			
+			HoaDonXuatHangOrderLine orderLine1 = new HoaDonXuatHangOrderLine(1,2,100000);
+			HoaDonXuatHangOrderLine orderLine2 = new HoaDonXuatHangOrderLine(1,2,100000);
+			List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+			orderLines.add(orderLine2);
+			orderLines.add(orderLine1);
+			
+			HoaDonXuatHang hoaDonXuatHang = new HoaDonXuatHang(100000,2000000,50000,LocalDate.of(2021, 7, 17),orderLines);
+			
+			hoaDonService.add(new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang));
