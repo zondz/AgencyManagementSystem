@@ -34,13 +34,14 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 
 	
 
-	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong,  int giaKhong) {
+	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong,  int giaKhong, int donGia) {
 		super();
 		this.id = id;
 		this.idHoaDon = idHoaDon;
 		this.idMatHang = idMatHang;
 		this.soLuong = soLuong;
 		this.giaKhong = giaKhong;
+		this.donGia= donGia;
 	
 	}
 	public HoaDonXuatHangOrderLine() {

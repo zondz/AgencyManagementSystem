@@ -232,6 +232,9 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 		
 		HoaDonXuatHang hoaDon = hoaDonXuatHangDTO.getHoaDonXuatHang();
 		hoaDon.setIdKhachHang(khachHang.getId());
+		
+		
+		
 		List<HoaDonXuatHangOrderLine> orderLines = hoaDon.getOrderLines();
 		
 		int tongCong = 0;
@@ -240,8 +243,15 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 			orderLine.setDonViTinh(matHang.getDonViTinh());
 			 // kiểm tra xem dùng giá khống hay không
 			if(orderLine.getGiaKhong()==0) {
-				orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
-				orderLine.setThanhTien(orderLine.getDonGia()*orderLine.getSoLuong());
+				// trường hợp lấy từ database lên mà có đơn giá 
+				if(orderLine.getDonGia()!=0) {
+					System.out.println(orderLine.getDonGia());
+					orderLine.setThanhTien(orderLine.getSoLuong()*orderLine.getDonGia());				
+				}else {
+					orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
+					orderLine.setThanhTien(orderLine.getDonGia()*orderLine.getSoLuong());
+				}
+				
 			}else {
 				orderLine.setThanhTien(orderLine.getGiaKhong()*orderLine.getSoLuong());
 			}

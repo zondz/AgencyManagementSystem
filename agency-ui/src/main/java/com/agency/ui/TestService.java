@@ -26,7 +26,6 @@ public class TestService {
 			KhachHangServiceRepository khachHangService = new KhachHangServiceRepositoryImplement();
 
 			//**************************************************
-		System.out.println(hoaDonService.findByIdKhacHangAndNgayViet(4, LocalDate.of(2021, 7, 14)));	;
-			
+			System.out.println(hoaDonService.getAll());
 		}
 }

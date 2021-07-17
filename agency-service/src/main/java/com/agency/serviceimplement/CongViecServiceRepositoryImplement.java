@@ -61,33 +61,7 @@ public class CongViecServiceRepositoryImplement implements CongViecServiceReposi
 		}
 		
 		return congViecDAOList;
-//		
-//		List<ThoCongViec> thoCongViecList = null;
-//		HoaDonXuatHang hoaDonXuatHang;
-//		CongViecDAO congViecDAO = null;
-//		// b2
-//		for (CongViec cv : congViecList) {
-//			thoCongViecList = thoCongViecRepository.getListThoCongViecByIdCongViec(cv.getId());
-//			// b3 chua xu ly hoa don xuat hang
-//			hoaDonXuatHang = hoaDonXuatHangService.getById(cv.getIdHoaDonXuatHang());
-//			
-//			// b4
-//			KhachHang khachHang = khachHangServiceRepository.getById(cv.getIdKhachHang());
-//			
-//			// b5
-//			cv.setTongChiPhiMatHang(hoaDonXuatHang.getTongCong()-hoaDonXuatHang.getGiamGia());
-//			double sumCongTho = 0 ;
-//			for(int i = 0 ; i< thoCongViecList.size();i++) {
-//				sumCongTho += thoCongViecList.get(i).getCongTho();
-//			}
-//			cv.setTongCongTho(sumCongTho);
-//			
-//			congViecDAO = new CongViecDAO(cv, thoCongViecList, hoaDonXuatHang, khachHang);
-//			congViecDAOList.add(congViecDAO);
-//
-//		}
-//		return congViecDAOList;
-//		return null;
+
 	}
 
 	/**

@@ -18,16 +18,16 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 
 	@Override
 	public void addManyByHoaDonXuatHangId(Integer idHoaDonXuatHang, List<HoaDonXuatHangOrderLine> orderLines) {
-		String vSQL = "Insert Into HoaDonXuatHangOrderLine(id_hoa_don_xuat_hang,id_mat_hang,so_luong,gia_khong)VALUES";
+		String vSQL = "Insert Into HoaDonXuatHangOrderLine(id_hoa_don_xuat_hang,id_mat_hang,so_luong,gia_khong,don_gia)VALUES";
 		for (HoaDonXuatHangOrderLine orderLine : orderLines) {
 			if (orderLine == orderLines.get(orderLines.size() - 1)) {
 				vSQL += "(" + idHoaDonXuatHang + "," + orderLine.getIdMatHang() + "," + orderLine.getSoLuong() + ","
-						+ orderLine.getGiaKhong() + ")";
+						+ orderLine.getGiaKhong()+","+orderLine.getDonGia() + ")";
 				break;
 
 			}
 			vSQL += "(" + idHoaDonXuatHang + "," + orderLine.getIdMatHang() + "," + orderLine.getSoLuong() + ","
-					+ orderLine.getGiaKhong() + "),";
+					+ orderLine.getGiaKhong()+","+orderLine.getDonGia() + "),";
 		}
 
 		database.executeSQLNotReturningResultSet(vSQL);
@@ -45,6 +45,7 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 			int idMatHang;
 			int soLuong;
 			int giaKhong;
+			int donGia;
 			HoaDonXuatHangOrderLine orderLine = null;
 			while (rs.next()) {
 				idOrder = rs.getInt("id");
@@ -52,7 +53,8 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 				idMatHang = rs.getInt("id_mat_hang");
 				soLuong = rs.getInt("so_luong");
 				giaKhong = rs.getInt("gia_khong");
-				orderLine = new HoaDonXuatHangOrderLine(idOrder, idHoaDon, idMatHang, soLuong, giaKhong);
+				donGia = rs.getInt("don_gia");
+				orderLine = new HoaDonXuatHangOrderLine(idOrder, idHoaDon, idMatHang, soLuong, giaKhong,donGia);
 				list.add(orderLine);
 			}
 		} catch (SQLException e) {
@@ -66,7 +68,7 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 	@Override
 	public void updateOne(HoaDonXuatHangOrderLine orderLine) {
 		String vSQL = "Update HoaDonXuatHangOrderLine Set id_mat_hang = "+orderLine.getIdMatHang()+","+"so_luong="+orderLine.getSoLuong()+
-				","+"gia_khong = "+orderLine.getGiaKhong() +" "+"Where id= "+orderLine.getId();
+				","+"gia_khong = "+orderLine.getGiaKhong() +","+"don_gia = "+orderLine.getDonGia()+" "+"Where id= "+orderLine.getId();
 		System.out.println(vSQL);
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
@@ -83,6 +85,7 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 			int idMatHang;
 			int soLuong;
 			int giaKhong;
+			int donGia;
 			HoaDonXuatHangOrderLine orderLine = null;
 			while(rs.next()) {
 				id = rs.getInt("id");
@@ -90,7 +93,8 @@ public class HoaDonXuatHangOrderLineRepositoryImplement implements HoaDonXuatHan
 				idMatHang = rs.getInt("id_mat_hang");
 				soLuong = rs.getInt("so_luong");
 				giaKhong = rs.getInt("gia_khong");
-				orderLine  = new HoaDonXuatHangOrderLine(id,idHoaDonXuatHang,idMatHang,soLuong,giaKhong);
+				donGia = rs.getInt("don_gia");
+				orderLine  = new HoaDonXuatHangOrderLine(id,idHoaDonXuatHang,idMatHang,soLuong,giaKhong,donGia);
 				orderLines.add(orderLine);
 			}
 		} catch (SQLException e) {
