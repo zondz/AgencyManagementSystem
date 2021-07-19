@@ -20,18 +20,9 @@ public NhaCungCap() {
 }
 
 // lay tu database len
-public NhaCungCap(int id, String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi) throws InvalidAttributeValueException {
+public NhaCungCap(int id, String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi){
 	super();
-	if(!(this.validateTen(ten))){
-		throw new InvalidAttributeValueException("Sai thông tin tên: "+ten);
-	}
-	if(!this.validateDiaChi(diaChi)) {
-		throw new InvalidAttributeValueException("Sai thông tin địa chỉ: "+diaChi);
-		
-	}
-	if(!this.validateSoDienThoai(soDienThoai)) {
-		throw new InvalidAttributeValueException("Sai thông tin số điện thoại: "+soDienThoai);
-	}
+
 	this.id = id;
 	this.ten = ten;
 	this.loaiNguon = loaiNguon;
@@ -40,18 +31,9 @@ public NhaCungCap(int id, String ten, LoaiNguon loaiNguon, String soDienThoai, S
 }
 
 // day xuong database
-public NhaCungCap(String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi) throws InvalidAttributeValueException {
+public NhaCungCap(String ten, LoaiNguon loaiNguon, String soDienThoai, String diaChi) {
 	super();
-	if(!(this.validateTen(ten))){
-		throw new InvalidAttributeValueException("Sai thông tin tên: "+ten);
-	}
-	if(!this.validateDiaChi(diaChi)) {
-		throw new InvalidAttributeValueException("Sai thông tin địa chỉ: "+diaChi);
-		
-	}
-	if(!this.validateSoDienThoai(soDienThoai)) {
-		throw new InvalidAttributeValueException("Sai thông tin số điện thoại: "+soDienThoai);
-	}
+
 	this.ten = ten;
 	this.loaiNguon = loaiNguon;
 	this.soDienThoai = soDienThoai;

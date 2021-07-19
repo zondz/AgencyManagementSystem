@@ -1,0 +1,11 @@
+
+				System.out.println("cap nhat mat hang mat hang");
+				MatHang matHang = matHangService.getById(2);
+				matHang.setGiaBanTrenDonVi(120000);
+				matHang.setTenMatHang("Alu name updated");
+				matHang.getMieuTa().setMauSac("MSUpdate");
+				matHang.getMieuTa().setKichThuoc(null);
+				matHang.getMieuTa().getOrigin().setCongTySanXuat("Công ty sản xuất updated");
+				matHangService.update(matHang);
+				
+				

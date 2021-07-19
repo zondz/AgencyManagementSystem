@@ -9,6 +9,14 @@ public class Origin {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public Origin(String nguonGocXuatXu, String congTySanXuat) {
+		super();
+		this.nguonGocXuatXu = nguonGocXuatXu;
+		this.congTySanXuat = congTySanXuat;
+	}
+
+
 	public Origin(int id, int mieuTaId, String nguonGocXuatXu, String congTySanXuat) {
 		super();
 		this.id = id;

@@ -22,6 +22,19 @@ public class MatHang implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong, int giaBanTrenDonVi,
+			MieuTa mieuTa) {
+		super();
+		this.tenMatHang = tenMatHang;
+		this.loaiHang = loaiHang;
+		this.donViTinh = donViTinh;
+		this.soLuong = soLuong;
+		this.giaBanTrenDonVi = giaBanTrenDonVi;
+		this.mieuTa = mieuTa;
+	}
+
+
 	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
 			int giaBanTrenDonVi, MieuTa mieuTa) throws InvalidAttributeValueException {
 		super();
@@ -63,9 +76,8 @@ public class MatHang implements Serializable {
 		return tenMatHang;
 	}
 
-	public void setTenMatHang(String tenMatHang) throws InvalidAttributeValueException {
-		if (!this.validateTenMatHang(tenMatHang))
-			throw new InvalidAttributeValueException("Sai tên mặt hàng: " + tenMatHang);
+	public void setTenMatHang(String tenMatHang) {
+	
 		this.tenMatHang = tenMatHang;
 	}
 
@@ -100,9 +112,8 @@ public class MatHang implements Serializable {
 		return giaBanTrenDonVi;
 	}
 
-	public void setGiaBanTrenDonVi(int giaBanTrenDonVi) throws InvalidAttributeValueException {
-		if (!this.validateGiaBanTrenDonVi(giaBanTrenDonVi))
-			throw new InvalidAttributeValueException("Sai thông tin giá bán trên đơn vị: " + giaBanTrenDonVi);
+	public void setGiaBanTrenDonVi(int giaBanTrenDonVi) {
+		
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 	}
 

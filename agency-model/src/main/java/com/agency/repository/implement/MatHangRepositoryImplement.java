@@ -32,6 +32,7 @@ public class MatHangRepositoryImplement implements MatHangRepository {
 			int giaNiemYet;
 			LoaiHang loaiHang = null;
 			MatHang matHang = null;
+
 			while (rs.next()) {
 				id = rs.getInt("id");
 				tenMatHang = rs.getString("ten_mat_hang");
@@ -42,6 +43,7 @@ public class MatHangRepositoryImplement implements MatHangRepository {
 				giaNiemYet = rs.getInt("gia_niem_yet");
 				matHang = new MatHang(id, tenMatHang, loaiHang, DonViTinh.valueOf(donViTinh), soLuongTonKho,
 						giaNiemYet);
+
 				list.add(matHang);
 			}
 		} catch (SQLException e) {
@@ -69,6 +71,7 @@ public class MatHangRepositoryImplement implements MatHangRepository {
 				idMatHang = rs.getInt("id");
 				tenMatHang = rs.getString("ten_mat_hang");
 				idLoaiHang = rs.getInt("id_loai_hang");
+				System.out.println(idLoaiHang);
 				loaiHang = covertFromIdToLoaiHang(idLoaiHang);
 				donViTinh = rs.getString("don_vi_tinh");
 				soLuongTonKho = rs.getInt("so_luong_ton_kho");
@@ -87,22 +90,28 @@ public class MatHangRepositoryImplement implements MatHangRepository {
 	public void add(MatHang entity) {
 		int idLoaiHang = convertFromLoaiHangToId(entity.getLoaiHang());
 		String vSQL = "Insert Into MatHang(ten_mat_hang,id_loai_hang,don_vi_tinh,so_luong_ton_kho,gia_niem_yet)"
-				+ "VALUES(" + entity.getTenMatHang() + "," + idLoaiHang + "," + entity.getDonViTinh().name() + ","
-				+ entity.getSoLuong() + "," + entity.getGiaBanTrenDonVi() + ");";
+				+ "VALUES(" + "\"" + entity.getTenMatHang() + "\"" + "," + idLoaiHang + "," + "\""
+				+ entity.getDonViTinh().name()+"\"" + "," + entity.getSoLuong() + "," + entity.getGiaBanTrenDonVi() + ");";
+
+		System.out.println(vSQL);
+
 		this.database.executeSQLNotReturningResultSet(vSQL);
 
 	}
 
 	public void update(MatHang entity) {
-		String vSQL = "Update MatHang Set ten_mat_hang =" + "\"" + entity.getTenMatHang() + "\"" + "id_loai_hang = "
+		String vSQL = "Update MatHang Set ten_mat_hang =" + "\"" + entity.getTenMatHang() + "\"" +","
+				+ " id_loai_hang = "
 				+ convertFromLoaiHangToId(entity.getLoaiHang()) + "," + "don_vi_tinh = " + "\""
-				+ entity.getDonViTinh().name() + "so_luong_ton_kho =" + entity.getSoLuong() + "gia_niem_yet = "
-				+ entity.getGiaBanTrenDonVi() + "where id = " + entity.getId();
+				+ entity.getDonViTinh().name()+"\""+"," + "so_luong_ton_kho = " + entity.getSoLuong() +","
+				+ " gia_niem_yet = "
+				+ entity.getGiaBanTrenDonVi() + " where id = " + entity.getId();
+		
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
 
 	public void deleteById(Integer id) {
-		String vSQL = "Delete from MatHang where id = "+id;
+		String vSQL = "Delete from MatHang where id = " + id;
 		this.database.executeSQLNotReturningResultSet(vSQL);
 	}
 
@@ -154,10 +163,43 @@ public class MatHangRepositoryImplement implements MatHangRepository {
 
 		for (int i = 0; i < LoaiHang.values().length; i++) {
 			if (loaiHang.name().contentEquals(LoaiHang.values()[i].name())) {
-				id = i++;
+				id = ++i;
 				return id;
 			}
 		}
 		return id;
+	}
+
+	@Override
+	public MatHang findOneByMatHangName(String tenMatHang) {
+		String vSQL = "Select * from MatHang Where ten_mat_hang = "+"\"" +tenMatHang +"\"" ;
+		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
+		MatHang matHang = null;
+		try {
+			int id ;
+			String tenHang;
+			int idLoaiHang;
+			LoaiHang loaiHang;
+			DonViTinh donViTinh;
+			int soLuongTonKho;
+			int giaNiemYet;
+			while(rs.next()) {
+				id = rs.getInt("id");
+				tenHang = rs.getString("ten_mat_hang");
+				idLoaiHang = rs.getInt("id_loai_hang");
+				loaiHang = covertFromIdToLoaiHang(idLoaiHang);
+				donViTinh =DonViTinh.valueOf( rs.getString("don_vi_tinh"));
+				soLuongTonKho = rs.getInt("so_luong_ton_kho");
+				giaNiemYet = rs.getInt("gia_niem_yet");
+				matHang = new MatHang(id,tenHang,loaiHang,donViTinh,soLuongTonKho,giaNiemYet);
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return matHang;
 	}
 }

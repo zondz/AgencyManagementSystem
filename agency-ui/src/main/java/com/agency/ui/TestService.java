@@ -1,31 +1,26 @@
 package com.agency.ui;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.agency.DAO.CongViecDAO;
-import com.agency.DAO.HoaDonXuatHangDTO;
-import com.agency.model.CongViec;
-import com.agency.model.HoaDonXuatHang;
-import com.agency.model.HoaDonXuatHangOrderLine;
-import com.agency.model.KhachHang;
-import com.agency.model.ThoCongViec;
-import com.agency.service.CongViecServiceRepository;
-import com.agency.service.HoaDonXuatHangServiceRepository;
-import com.agency.service.KhachHangServiceRepository;
-import com.agency.serviceimplement.CongViecServiceRepositoryImplement;
-import com.agency.serviceimplement.HoaDonXuatHangServiceRepositoryImplement;
-import com.agency.serviceimplement.KhachHangServiceRepositoryImplement;
+import com.agency.model.DonViTinh;
+import com.agency.model.KichThuoc;
+import com.agency.model.LoaiHang;
+import com.agency.model.LoaiNguon;
+import com.agency.model.MatHang;
+import com.agency.model.MieuTa;
+import com.agency.model.NhaCungCap;
+import com.agency.model.Origin;
+import com.agency.service.MatHangServiceRepository;
+import com.agency.serviceimplement.MatHangServiceRepositoryImplement;
 
 
 public class TestService {
 		public static void main(String[] args) {
 			System.out.println("In test service");
-			HoaDonXuatHangServiceRepository hoaDonService = new HoaDonXuatHangServiceRepositoryImplement();
-			KhachHangServiceRepository khachHangService = new KhachHangServiceRepositoryImplement();
+			MatHangServiceRepository matHangService = new MatHangServiceRepositoryImplement();
 
 			//**************************************************
-			System.out.println(hoaDonService.getAll());
+			System.out.println("delete mot mat hang");
+			matHangService.deleteById(1);
+			
+			
 		}
 }

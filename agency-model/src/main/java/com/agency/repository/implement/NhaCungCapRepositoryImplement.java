@@ -45,10 +45,7 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidAttributeValueException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		return list;
 	}
 
@@ -74,9 +71,6 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidAttributeValueException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return ncc;
 	}
@@ -86,17 +80,19 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 		// TODO Auto-generated method stub
 		
 		// xem xét loại nguồn 
+		 int idLoaiNhaCungCap = this.convertFromLoaiNguonToIdLoaiNguon(entity.getLoaiNguon());
 		
-		String vSQL = "INSERT INTO NguonCungCap(ten,loai_nguon,so_dien_thoai,dia_chi)" + "VALUES(" + "\""
-				+ entity.getTen() + "\"" + "," + "\"" + entity.getLoaiNguon() + "\"" + "," + "\""
+		String vSQL = "INSERT INTO NhaCungCap(ten,id_loai_nha_cung_cap,so_dien_thoai,dia_chi)" + "VALUES(" + "\""
+				+ entity.getTen() + "\"" + "," +idLoaiNhaCungCap+ "," + "\""
 				+ entity.getSoDienThoai() + "\"" + "," + "\"" + entity.getDiaChi() + "\"" + ");";
 		database.executeSQLNotReturningResultSet(vSQL);
 	}
 	
 	//tested
 	public void update(NhaCungCap entity) {
-		String vSQL = "UPDATE NguonCungCap SET ten =" + "\"" + entity.getTen() + "\"" + "," + "loai_nguon= " + "\""
-				+ entity.getLoaiNguon() + "\"" + "," + "so_dien_thoai= " + "\"" + entity.getSoDienThoai() + "\"" + ","
+		 int idLoaiNhaCungCap = this.convertFromLoaiNguonToIdLoaiNguon(entity.getLoaiNguon());
+
+		String vSQL = "UPDATE NhaCungCap SET ten =" + "\"" + entity.getTen() + "\"" + "," + "id_loai_nha_cung_cap= " +idLoaiNhaCungCap + "," + "so_dien_thoai= " + "\"" + entity.getSoDienThoai() + "\"" + ","
 				+ "dia_chi = " + "\"" + entity.getDiaChi() + "\"" + " WHERE id= " + entity.getId();
 		
 		database.executeSQLNotReturningResultSet(vSQL);
@@ -106,6 +102,24 @@ public class NhaCungCapRepositoryImplement implements NhaCungCapRepository {
 	public void deleteById(Integer id) {
 		String vSQL = "DELETE FROM NhaCungCap WHERE id = "+id;
 		database.executeSQLNotReturningResultSet(vSQL);
+	}
+	
+	
+	private int convertFromLoaiNguonToIdLoaiNguon(LoaiNguon loaiNguon) {
+		int idLoaiNhaCungCap = -1 ;
+		switch(loaiNguon.name()) {
+		case "NhàSảnXuất" :
+			idLoaiNhaCungCap = 1;
+			break ; 
+		case "ĐạiLýCấpMột" : 
+			idLoaiNhaCungCap = 2 ;
+			break;
+		case "ĐạiLýCấpHai" : 
+			idLoaiNhaCungCap = 3 ;
+			break;
+		
+		}		
+		return idLoaiNhaCungCap;
 	}
 
 }

@@ -1,0 +1,9 @@
+System.out.println("Them mot mat hang");
+			
+			
+			KichThuoc kichThuoc  = new KichThuoc(12,24,0.5);
+			Origin origin = new Origin("Trung Quốc","Công ty Trung Quốc");
+			MieuTa mieuTa = new MieuTa("Vang",kichThuoc,origin);
+			MatHang matHang = new MatHang("Alu mới",LoaiHang.Alu,DonViTinh.Tấm,2,100000,mieuTa);
+			
+			matHangService.add(matHang);

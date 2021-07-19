@@ -4,4 +4,6 @@ import com.agency.model.MieuTa;
 
 public interface MieuTaRepository extends GenericRepository<Integer,MieuTa>{
 
+	MieuTa getByMatHangId(int idMatHang);
+
 }

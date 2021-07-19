@@ -18,12 +18,11 @@ public class MieuTa implements Serializable {
 	
 	
 
-	
-
-	public MieuTa(int idMatHang, String mauSac) {
+	public MieuTa(String mauSac, KichThuoc kichThuoc, Origin origin) {
 		super();
-		this.idMatHang = idMatHang;
 		this.mauSac = mauSac;
+		this.kichThuoc = kichThuoc;
+		this.origin = origin;
 	}
 
 	public MieuTa(int id, int idMatHang, String mauSac) {
@@ -32,7 +31,7 @@ public class MieuTa implements Serializable {
 		this.idMatHang = idMatHang;
 		this.mauSac = mauSac;
 	}
-
+	
 	public MieuTa(int id, int idMatHang, String mauSac, KichThuoc kichThuoc, Origin origin) {
 		super();
 		this.id = id;
@@ -71,8 +70,7 @@ public class MieuTa implements Serializable {
 		return mauSac;
 	}
 
-	public void setMauSac(String mauSac) throws InvalidAttributeValueException {
-		if(!this.validateMauSac(mauSac)) throw new InvalidAttributeValueException("Sai thông tin màu sắc: "+mauSac);
+	public void setMauSac(String mauSac) {
 		this.mauSac = mauSac;
 	}
 

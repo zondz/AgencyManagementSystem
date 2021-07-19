@@ -1,5 +1,6 @@
 package com.agency.model;
 
 public enum DonViTinh {
-	mét
+	mét,
+	Tấm
 }
