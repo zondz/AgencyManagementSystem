@@ -141,9 +141,8 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 
 		String vSQL = "Update HoaDonXuatHang Set tien_van_chuyen= " + entity.getVanChuyen() + "," + "dat_truoc= "
 				+ entity.getDatTruoc() + "," + "id_trang_thai_hoa_don = " + idTrangThaiHoaDon + "," + "giam_gia= "
-				+ entity.getGiamGia() + "," + "ngay_viet= " + "STR_TO_DATE("
-				+ "\"" + entity.getNgayViet() + "\"" + ","+"\"" +"%Y-%m-%d" +"\"" +") "
-				+ " Where id= " + entity.getId() + ";";
+				+ entity.getGiamGia() + "," + "ngay_viet= " + "STR_TO_DATE(" + "\"" + entity.getNgayViet() + "\"" + ","
+				+ "\"" + "%Y-%m-%d" + "\"" + ") " + " Where id= " + entity.getId() + ";";
 		System.out.println(vSQL);
 		database.executeSQLNotReturningResultSet(vSQL);
 
@@ -195,6 +194,43 @@ public class HoaDonXuatHangRepositoryImplement implements HoaDonXuatHangReposito
 		}
 
 		return hoaDonXuatHang;
+	}
+
+	@Override
+	public HoaDonXuatHang getLatestRecord() {
+		String vSQL = "select *from HoaDonXuatHang ORDER BY id DESC LIMIT 1";
+
+		ResultSet rs = this.database.executeSQLReturningResultSet(vSQL);
+		HoaDonXuatHang result = null;
+		try {
+			int id;
+			int idKhachHang;
+			int tienVanChuyen;
+			int datTruoc;
+			int idTrangThaiHoaDon;
+			TrangThaiHoaDon status;
+			int giamGia;
+			LocalDate ngayViet;
+			while (rs.next()) {
+				id = rs.getInt("id");
+				idKhachHang = rs.getInt("id_khach_hang");
+				tienVanChuyen = rs.getInt("tien_van_chuyen");
+				datTruoc = rs.getInt("dat_truoc");
+				idTrangThaiHoaDon = rs.getInt("id_trang_thai_hoa_don");
+				if (idTrangThaiHoaDon == 1) {
+					status = TrangThaiHoaDon.ĐãThanhToán;
+				} else {
+					status = TrangThaiHoaDon.CònNợ;
+				}
+				giamGia = rs.getInt("giam_gia");
+				ngayViet = rs.getDate("ngay_viet").toLocalDate();
+				result = new HoaDonXuatHang(id, idKhachHang, tienVanChuyen, datTruoc, giamGia, status, ngayViet);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

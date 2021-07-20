@@ -3,38 +3,40 @@ package com.agency.serviceimplement;
 import java.util.List;
 
 import com.agency.model.Tho;
+import com.agency.repository.ThoRepository;
+import com.agency.repository.implement.ThoRepositoryImplement;
 import com.agency.service.ThoServiceRepository;
 
 public class ThoServiceRepositoryImplement implements ThoServiceRepository{
-
+	private ThoRepository thoRepository;
+	public ThoServiceRepositoryImplement() {
+		// TODO Auto-generated constructor stub
+		thoRepository  = new ThoRepositoryImplement();
+	}
 	@Override
 	public List<Tho> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Tho>) thoRepository.getAll();
 	}
 
 	@Override
 	public Tho getById(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return thoRepository.get(id);
 	}
 
 	@Override
 	public void add(Tho entity) {
-		// TODO Auto-generated method stub
-		
+		thoRepository.add(entity);
 	}
 
 	@Override
 	public void update(Tho entity) {
-		// TODO Auto-generated method stub
-		
+		thoRepository.update(entity);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		thoRepository.deleteById(id);
 	}
 
 }

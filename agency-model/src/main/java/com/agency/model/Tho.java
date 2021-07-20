@@ -14,19 +14,15 @@ public class Tho implements Serializable {
 
 	public Tho(int id, String ten, String soDienThoai) throws InvalidAttributeValueException {
 		super();
-		if(!(this.validateTen(ten)&&this.validateSoDienThoai(soDienThoai))) 
-			throw new InvalidAttributeValueException("Thông tin không hợp lệ");
-		
+
 		this.id = id;
 		this.ten = ten;
 		this.soDienThoai = soDienThoai;
 	}
 
-	public Tho(String ten, String soDienThoai) throws InvalidAttributeValueException {
+	public Tho(String ten, String soDienThoai) {
 		super();
-		if(!(this.validateTen(ten)&&this.validateSoDienThoai(soDienThoai))) 
-			throw new InvalidAttributeValueException("Thông tin không hợp lệ");
-	
+
 		this.ten = ten;
 		this.soDienThoai = soDienThoai;
 	}
@@ -35,14 +31,12 @@ public class Tho implements Serializable {
 		return id;
 	}
 
-	
-
 	public String getTen() {
 		return ten;
 	}
 
-	public void setTen(String ten) throws InvalidAttributeValueException {
-		if(!this.validateTen(ten)) throw new InvalidAttributeValueException("tên không hợp lệ");
+	public void setTen(String ten) {
+
 		this.ten = ten;
 	}
 
@@ -51,18 +45,19 @@ public class Tho implements Serializable {
 	}
 
 	public void setSoDienThoai(String soDienThoai) throws InvalidAttributeValueException {
-		if(!this.validateSoDienThoai(soDienThoai)) throw new InvalidAttributeValueException("Số điện thoại không hợp lệ");
-		
+		if (!this.validateSoDienThoai(soDienThoai))
+			throw new InvalidAttributeValueException("Số điện thoại không hợp lệ");
+
 		this.soDienThoai = soDienThoai;
 	}
 
 	protected boolean validateTen(String ten) {
-		return ten!=null&&ten.length() >= 0 && ten.length() <= this.MAX_LENGTH_TEN;
+		return ten != null && ten.length() >= 0 && ten.length() <= this.MAX_LENGTH_TEN;
 
 	}
 
 	protected boolean validateSoDienThoai(String soDienThoai) {
-		return soDienThoai!=null&&soDienThoai.length() >= this.MIN_LENGTH_SO_DIEN_THOAI
+		return soDienThoai != null && soDienThoai.length() >= this.MIN_LENGTH_SO_DIEN_THOAI
 				&& soDienThoai.length() <= this.MAX_LENGTH_SO_DIEN_THOAI;
 
 	}

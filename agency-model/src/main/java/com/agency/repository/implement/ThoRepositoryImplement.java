@@ -12,7 +12,11 @@ import com.agency.model.database.Database;
 import com.agency.repository.ThoRepository;
 
 public class ThoRepositoryImplement implements ThoRepository {
-	Database database = Database.getInstance();
+	private Database database ;
+	public ThoRepositoryImplement() {
+		// TODO Auto-generated constructor stub
+		database = Database.getInstance();
+	}
 
 	// tested
 	public Iterable<Tho> getAll() {

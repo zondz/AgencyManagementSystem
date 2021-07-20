@@ -2,10 +2,6 @@ package com.agency.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.management.InvalidAttributeValueException;
 
 public class CongViec implements Serializable {
 
@@ -14,16 +10,11 @@ public class CongViec implements Serializable {
 	public static final int MIN_TONG_CONG_THO = 0;
 	private int id;
 	private int idKhachHang;
-	// moi co cai nay
 	private int idHoaDonXuatHang;
 	private String tenCongViec;
 	private double tongChiPhiMatHang;
 	private double tongCongTho;
 	private LocalDate ngayBatDau;
-
-
-	
-	
 
 	public CongViec(int id, int idKhachHang, int idHoaDonXuatHang, String tenCongViec, LocalDate ngayBatDau) {
 		super();
@@ -34,17 +25,12 @@ public class CongViec implements Serializable {
 		this.ngayBatDau = ngayBatDau;
 	}
 
-	
-	
-	//view 
+	// view
 	public CongViec(String tenCongViec, LocalDate ngayBatDau) {
 		this.tenCongViec = tenCongViec;
 		this.ngayBatDau = ngayBatDau;
-		
+
 	}
-
-
-
 
 	public int getIdHoaDonXuatHang() {
 		return idHoaDonXuatHang;
@@ -70,13 +56,12 @@ public class CongViec implements Serializable {
 		this.idKhachHang = idKhachHang;
 	}
 
-
 	public String getTenCongViec() {
 		return tenCongViec;
 	}
 
 	public void setTenCongViec(String tenCongViec) {
-		
+
 		this.tenCongViec = tenCongViec;
 	}
 
@@ -84,8 +69,7 @@ public class CongViec implements Serializable {
 		return tongChiPhiMatHang;
 	}
 
-	public void setTongChiPhiMatHang(double tongChiPhiMatHang)  {
-	
+	public void setTongChiPhiMatHang(double tongChiPhiMatHang) {
 
 		this.tongChiPhiMatHang = tongChiPhiMatHang;
 	}
@@ -98,8 +82,6 @@ public class CongViec implements Serializable {
 
 		this.tongCongTho = tongCongTho;
 	}
-
-	
 
 	public LocalDate getNgayBatDau() {
 		return ngayBatDau;
@@ -122,15 +104,11 @@ public class CongViec implements Serializable {
 		return tongCongTho >= this.MIN_TONG_CONG_THO;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "CongViec [id=" + id + ", idKhachHang=" + idKhachHang + ", idHoaDonXuatHang=" + idHoaDonXuatHang
 				+ ", tenCongViec=" + tenCongViec + ", tongChiPhiMatHang=" + tongChiPhiMatHang + ", tongCongTho="
 				+ tongCongTho + ", ngayBatDau=" + ngayBatDau + "]";
 	}
-
 
 }
