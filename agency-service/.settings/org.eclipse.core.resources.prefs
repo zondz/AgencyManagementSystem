@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/agency/serviceimplement/CongViecServiceRepositoryImplement.java=UTF-8
+encoding//src/main/java/com/agency/serviceimplement/HoaDonNhapHangServiceRepositoryImplement.java=UTF-8
 encoding//src/main/java/com/agency/serviceimplement/HoaDonXuatHangServiceRepositoryImplement.java=UTF-8
 encoding//src/main/java/com/agency/serviceimplement/MatHangServiceRepositoryImplement.java=UTF-8
 encoding//src/main/java/com/agency/serviceimplement/MieuTaServiceRepositoryImplement.java=UTF-8

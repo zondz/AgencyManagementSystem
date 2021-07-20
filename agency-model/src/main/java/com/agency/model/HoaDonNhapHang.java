@@ -12,16 +12,16 @@ List<HoaDonNhapHangOrderLine> orderLines;
 private LocalDate ngayCungCap;
 private double tongTien;
 
-public HoaDonNhapHang(int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
-		double tongTien) {
+public HoaDonNhapHang(int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap
+	) {
 	super();
 	this.idNhaCungCap = idNhaCungCap;
 	this.orderLines = orderLines;
 	this.ngayCungCap = ngayCungCap;
 	this.tongTien = this.calculateTongTien(orderLines);
 }
-public HoaDonNhapHang(int id, int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap,
-		double tongTien) {
+public HoaDonNhapHang(int id, int idNhaCungCap, List<HoaDonNhapHangOrderLine> orderLines, LocalDate ngayCungCap
+		) {
 	super();
 	this.id = id;
 	this.idNhaCungCap = idNhaCungCap;
@@ -52,6 +52,7 @@ public List<HoaDonNhapHangOrderLine> getOrderLines() {
 }
 public void setOrderLines(List<HoaDonNhapHangOrderLine> orderLines) {
 	this.orderLines = orderLines;
+	this.tongTien = this.calculateTongTien(orderLines);
 }
 public LocalDate getNgayCungCap() {
 	return ngayCungCap;

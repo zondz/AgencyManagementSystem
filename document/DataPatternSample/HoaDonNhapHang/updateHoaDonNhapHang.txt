@@ -1,0 +1,21 @@
+		System.out.println("In test service");
+			HoaDonNhapHangServiceRepository hoaDonService = new HoaDonNhapHangServiceRepositoryImplement();
+			MatHangServiceRepositoryImplement matHangService = new MatHangServiceRepositoryImplement();
+			HoaDonNhapHangOrderLineRepository orderLineRepository = new HoaDonNhapHangOrderLineRepositoryImplement();
+			
+			List<HoaDonNhapHangOrderLine> orderLineFromDb = orderLineRepository.getByHoaDonId(1);
+			HoaDonNhapHangOrderLine order1 = orderLineFromDb.get(0);
+			HoaDonNhapHangOrderLine order2 = orderLineFromDb.get(1);
+
+			order1.setSoLuong(5);
+			order1.setDonGia(141000);
+			HoaDonNhapHangOrderLine newOrderLine = new HoaDonNhapHangOrderLine(1,7,30000);
+			List<HoaDonNhapHangOrderLine> orderLines = new ArrayList<HoaDonNhapHangOrderLine>();
+			orderLines.add(order1);
+			orderLines.add(order2);
+			orderLines.add(newOrderLine);
+			// th1 : 
+			
+			HoaDonNhapHang hoaDonNhapHang = new HoaDonNhapHang(1,2,orderLines,LocalDate.of(2021, 7, 21));
+			hoaDonService.update(hoaDonNhapHang);
+			
