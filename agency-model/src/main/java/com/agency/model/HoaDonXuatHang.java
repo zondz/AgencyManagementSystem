@@ -29,7 +29,7 @@ public class HoaDonXuatHang implements Serializable {
 		this.vanChuyen = vanChuyen;
 		this.datTruoc = datTruoc;
 		this.giamGia = giamGia;
-		this.trangThaiHoaDon = trangThaiHoaDon;
+		this.ngayViet = ngayViet;
 
 	}
 
@@ -145,7 +145,6 @@ public class HoaDonXuatHang implements Serializable {
 
 	}
 
-	// validate
 	private double calTongCong() {
 		double sum = 0;
 		for (int i = 0; i < this.orderLines.size(); i++) {
@@ -173,7 +172,8 @@ public class HoaDonXuatHang implements Serializable {
 	public String toString() {
 		return "HoaDonXuatHang [id=" + id + ", idKhachHang=" + idKhachHang + ", vanChuyen=" + vanChuyen + ", tongCong="
 				+ tongCong + ", datTruoc=" + datTruoc + ", giamGia=" + giamGia + ", conLai=" + conLai
-				+ ", trangThaiHoaDon=" + trangThaiHoaDon + ", orderLines=" + orderLines + "]";
+				+ ", trangThaiHoaDon=" + trangThaiHoaDon + ", ngayViet=" + ngayViet + ", orderLines=" + orderLines
+				+ "]";
 	}
 
 }

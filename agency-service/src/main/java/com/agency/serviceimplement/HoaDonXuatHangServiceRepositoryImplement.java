@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agency.DAO.HoaDonXuatHangDTO;
+import javax.naming.directory.InvalidAttributeValueException;
+
 import com.agency.model.HoaDonXuatHang;
 import com.agency.model.HoaDonXuatHangOrderLine;
+import com.agency.model.MatHang;
 import com.agency.repository.HoaDonXuatHangOrderLineRepository;
 import com.agency.repository.HoaDonXuatHangRepository;
 import com.agency.repository.implement.HoaDonXuatHangOrderLineRepositoryImplement;
@@ -40,17 +42,14 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 	 * 
 	 * 
 	 */
+
 	@Override
 	public List<HoaDonXuatHang> getAll() {
 		List<HoaDonXuatHang> result = (List<HoaDonXuatHang>) hoaDonXuatHangRepository.getAll();
 
 		List<HoaDonXuatHangOrderLine> allOrderLines = hoaDonXuatHangOrderLineRepository.getAll();
 
-		HoaDonXuatHangDTO hoaDonXuatHangDTO;
-
 		for (HoaDonXuatHang hoaDon : result) {
-
-//			KhachHang khachHang = khachHangService.getById(hoaDon.getIdKhachHang());
 
 			List<HoaDonXuatHangOrderLine> orderLinesForOneHoaDon = new ArrayList<HoaDonXuatHangOrderLine>();
 
@@ -64,30 +63,25 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 			}
 
 			hoaDon.setOrderLines(orderLinesForOneHoaDon);
-//			hoaDon = this.setUpHoaDonXuatHang(new HoaDonXuatHangDTO(hoaDon, khachHang));
-//			hoaDonXuatHangDTO = new HoaDonXuatHangDTO(hoaDon, khachHang);
-//			result.add(hoaDonXuatHangDTO);
+
 		}
 
 		return result;
 	}
 
 	/**
-	 * b1 : lấy hóa đơn với id từ database b2 : lấy các orderLines với id hóa đơn
+	 * b1 : lấy hóa đơn với id từ database 
+	 * b2 : lấy các orderLines với id hóa đơn
 	 * 
 	 * 
 	 */
 	@Override
+
 	public HoaDonXuatHang getById(Integer id) {
 		HoaDonXuatHang hoaDon = hoaDonXuatHangRepository.get(id);
 		List<HoaDonXuatHangOrderLine> orderLines = hoaDonXuatHangOrderLineRepository.findByHoaDonXuatHangId(id);
-
-//		KhachHang khachHang = khachHangService.getById(hoaDon.getIdKhachHang());
 		hoaDon.setOrderLines(orderLines);
-//		hoaDon = this.setUpHoaDonXuatHang(new HoaDonXuatHangDTO(hoaDon, khachHang));
 
-//		HoaDonXuatHangDTO hoaDonDTO = new HoaDonXuatHangDTO(hoaDon, khachHang);
-		System.out.println("Hoá đơn xuất hàng service - get by id - finished");
 		return hoaDon;
 	}
 
@@ -96,100 +90,123 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 	 * 
 	 * Từ công việc gọi b1 : add thông tin để tạo một hóa đơn trong bảng hóa đơn b2
 	 * : lấy lại id của hóa đơn mới b3 : tạo các record mới của các orderLine với id
-	 * của hóa đơn mới
+	 * của hóa đơn mới b4 : nếu không đủ hàng
+	 * 
+	 * @throws InvalidAttributeValueException
 	 * 
 	 */
 	@Override
-	public void add(HoaDonXuatHang entity) {
+	public void add(HoaDonXuatHang entity) throws InvalidAttributeValueException {
 
-		// HoaDonXuatHang hoaDonXuatHang = this.setUpHoaDonXuatHang(entity);
-		hoaDonXuatHangRepository.add(entity);
-		HoaDonXuatHang hoaDon = hoaDonXuatHangRepository.getLatestRecord();
 		List<HoaDonXuatHangOrderLine> orderLines = entity.getOrderLines();
 
+		// nếu không đủ hàng -> thông báo thiếu hàng
+		this.checkSoLuongMatHang(orderLines);
+
+		MatHang matHang;
+		for (HoaDonXuatHangOrderLine orderLine : orderLines) {
+			matHang = matHangService.getById(orderLine.getIdMatHang());
+			matHang.setSoLuong(matHang.getSoLuong() - orderLine.getSoLuong());
+			matHangService.update(matHang);
+		}
+
+		hoaDonXuatHangRepository.add(entity);
+		HoaDonXuatHang hoaDon = hoaDonXuatHangRepository.getLatestRecord();
+
 		hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(hoaDon.getId(), orderLines);
-
-//		HoaDonXuatHang hoaDonFromDatabase = this.findByIdKhacHangAndNgayViet(hoaDonXuatHang.getIdKhachHang(),
-//				hoaDonXuatHang.getNgayViet());
-
-//		hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(hoaDonFromDatabase.getId(),
-//				hoaDonXuatHang.getOrderLines());
-		System.out.println("Add hóa đơn service finished");
 	}
 
 	/**
-	 * 
-	 * b1 : set up hóa đơn
-	 * 
-	 * b2 : cập nhật ở bảng hóa đơn xuất hàng
-	 * 
-	 * b3 : cập nhật ở bảng hóa đơn xuất hàng OrderLines 3 trường hợp
-	 * 
-	 * th1 : thêm mới một orderline th2 : xóa bớt một orderline th3 : xóa đi và thêm
-	 * những cái khác b1: lấy các orderLine cũ từ database ra b2 : phân loại từng
-	 * orderline từ view là cũ hay mới dựa vào id của nó 2.1 : nếu là mới -> gọi
-	 * repository để add thêm orderLine 2.2 : nếu là cũ -> gọi repository cập nhật
-	 * 
-	 * b3 : tìm ra các orderLine bị xóa trên view bằng cách nhìn vào id -> nếu không
-	 * trùng -> xóa trong database
+	 * b1 : lấy tất cả các orderline với hóa đơn id
+	 * b2 : lấy ra các orderline view truyền vào
+	 * b3 : xóa các orderline không cần từ db , xóa luôn trong list 
+	 * b4 :	các orderLine mới -> kiểm tra số lượng -> add vào database  
+	 * b6 : với các orderLine cũ  -> kiểm tra sự lệch về số lượng -> đối chiếu vào database 
+	 * b7  : update orderLine cũ
+	 *  b8 : update hóa đơn
+	 * @throws InvalidAttributeValueException
 	 * 
 	 */
 	@Override
-	public void update(HoaDonXuatHang entity) {
+	public void update(HoaDonXuatHang entity) throws InvalidAttributeValueException {
 
-		hoaDonXuatHangRepository.update(entity);
-
-		// old set orderLine
-		List<HoaDonXuatHangOrderLine> oldOrderLines = hoaDonXuatHangOrderLineRepository
+		// b1
+		List<HoaDonXuatHangOrderLine> orderLinesFromDb = hoaDonXuatHangOrderLineRepository
 				.findByHoaDonXuatHangId(entity.getId());
 
-		// update set orderLine
-		List<HoaDonXuatHangOrderLine> orderLines = entity.getOrderLines();
+		// b2
+		List<HoaDonXuatHangOrderLine> updateOrderLines = entity.getOrderLines();
+		System.out.println(updateOrderLines);
 
-		for (HoaDonXuatHangOrderLine orderLine : oldOrderLines) {
+		// b3
+		for (int i = 0; i < orderLinesFromDb.size() - 1; i++) {
 			boolean keptOrderLine = false;
-
-			for (HoaDonXuatHangOrderLine newOrderLine : orderLines) {
-				if (orderLine.getId() == newOrderLine.getId()) {
+			HoaDonXuatHangOrderLine orderLineFromDb = orderLinesFromDb.get(i);
+			for (HoaDonXuatHangOrderLine updateOrderLine : updateOrderLines) {
+				if (orderLineFromDb.getId() == updateOrderLine.getId()) {
 					keptOrderLine = true;
 				}
 			}
 
 			if (keptOrderLine == false) {
 
-				hoaDonXuatHangOrderLineRepository.deleteOneById(orderLine.getId());
+				hoaDonXuatHangOrderLineRepository.deleteOneById(orderLineFromDb.getId());
+				orderLinesFromDb.remove(orderLineFromDb);
 
 			}
 
 		}
 
-		// new orderLine
-		List<HoaDonXuatHangOrderLine> newOrderLines = new ArrayList<>();
+		// b6
+		List<HoaDonXuatHangOrderLine> newOrderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+		MatHang matHang;
+		for (HoaDonXuatHangOrderLine orderLine : updateOrderLines) {
+			matHang = matHangService.getById(orderLine.getIdMatHang());
+			// new orderline
+			if (orderLine.getId() == 0) {
+				newOrderLines.add(orderLine);
+				matHang.setSoLuong(matHang.getSoLuong() - orderLine.getSoLuong());
+			}
+			// update orderline
+			else {
+				int chenhLechSoLuong;
+				HoaDonXuatHangOrderLine oldRecord = hoaDonXuatHangOrderLineRepository.getById(orderLine.getId());
+				chenhLechSoLuong = orderLine.getSoLuong() - oldRecord.getSoLuong();
+				// lấy nhiều hơn
+				if (chenhLechSoLuong > 0) {
+					// số lượng còn lại ít hơn
+					if (matHang.getSoLuong() < chenhLechSoLuong) {
+						throw new InvalidAttributeValueException("Không đủ số lượng cho : " + matHang.getTenMatHang());
 
-		for (HoaDonXuatHangOrderLine orderLine : orderLines) {
+					}
 
-			if (orderLine.getId() != 0) {
-
+				}
+				// đã đảm bảo số lượng k vượt quá
+				matHang.setSoLuong(matHang.getSoLuong() - chenhLechSoLuong);
+				matHangService.update(matHang);
 				hoaDonXuatHangOrderLineRepository.updateOne(orderLine);
 
-			} else {
-				newOrderLines.add(orderLine);
-
 			}
 
 		}
 
-		hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(entity.getId(), newOrderLines);
+		// b4
+		if (newOrderLines.size() != 0)
 
-		System.out.println("Hoa Don Xuat Hang update service finished");
+		{
+			this.checkSoLuongMatHang(newOrderLines);
+			hoaDonXuatHangOrderLineRepository.addManyByHoaDonXuatHangId(entity.getId(), newOrderLines);
+		}
+
+		hoaDonXuatHangRepository.update(entity);
 
 	}
 
 	// tested
 	@Override
+
 	public void deleteById(Integer id) {
 		this.hoaDonXuatHangRepository.deleteById(id);
-		System.out.println("Hoá đơn xuất hàng service - delete by id finished");
 	}
 
 	@Override
@@ -198,53 +215,16 @@ public class HoaDonXuatHangServiceRepositoryImplement implements HoaDonXuatHangS
 		return hoaDonXuatHangRepository.findByIdKhacHangAndNgayViet(idKhachHang, ngayViet);
 	}
 
-//	@Override
-//	public HoaDonXuatHang setUpHoaDonXuatHang(HoaDonXuatHangDTO hoaDonXuatHangDTO) {
-//		KhachHang khachHang = hoaDonXuatHangDTO.getKhachHang();
-//		boolean userDuplicate = khachHangService.checkDuplicateUser(khachHang.getSoDienThoai());
-//		if (!userDuplicate) {
-//			khachHangService.add(khachHang);
-//		}
-//
-//		HoaDonXuatHang hoaDon = hoaDonXuatHangDTO.getHoaDonXuatHang();
-//		hoaDon.setIdKhachHang(khachHang.getId());
-//
-//		List<HoaDonXuatHangOrderLine> orderLines = hoaDon.getOrderLines();
-//
-//		int tongCong = 0;
-//		for (HoaDonXuatHangOrderLine orderLine : orderLines) {
-//			MatHang matHang = matHangService.getById(orderLine.getIdMatHang());
-//			orderLine.setDonViTinh(matHang.getDonViTinh());
-//			// kiểm tra xem dùng giá khống hay không
-//			if (orderLine.getGiaKhong() == 0) {
-//				// trường hợp lấy từ database lên mà có đơn giá
-//				if (orderLine.getDonGia() != 0) {
-//					System.out.println(orderLine.getDonGia());
-//					orderLine.setThanhTien(orderLine.getSoLuong() * orderLine.getDonGia());
-//				} else {
-//					orderLine.setDonGia(matHang.getGiaBanTrenDonVi());
-//					orderLine.setThanhTien(orderLine.getDonGia() * orderLine.getSoLuong());
-//				}
-//
-//			} else {
-//				orderLine.setThanhTien(orderLine.getGiaKhong() * orderLine.getSoLuong());
-//			}
-//			tongCong += orderLine.getThanhTien();
-//		}
-//
-//		// cập nhật hóa đơn
-//		tongCong += hoaDon.getVanChuyen();
-//		hoaDon.setOrderLines(orderLines);
-//		hoaDon.setTongCong(tongCong);
-//		hoaDon.setConLai(hoaDon.getTongCong() - hoaDon.getDatTruoc() - hoaDon.getGiamGia());
-//		if (hoaDon.getConLai() > 0) {
-//			hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.CònNợ);
-//		} else {
-//			hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.ĐãThanhToán);
-//
-//		}
-//
-//		return hoaDon;
-//	}
+	private void checkSoLuongMatHang(List<HoaDonXuatHangOrderLine> orderLines) throws InvalidAttributeValueException {
+		MatHang matHang = null;
+		for (HoaDonXuatHangOrderLine orderLine : orderLines) {
+			matHang = matHangService.getById(orderLine.getIdMatHang());
+			if (orderLine.getSoLuong() > matHang.getSoLuong()) {
+				throw new InvalidAttributeValueException("Không có đủ số lượng cho : " + matHang.getTenMatHang());
+			}
+
+		}
+
+	}
 
 }

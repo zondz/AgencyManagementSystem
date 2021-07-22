@@ -22,14 +22,7 @@ public class HoaDonNhapHangOrderLine implements Serializable {
 		this.donGia = donGia;
 		this.thanhTien = soLuong*donGia;
 	}
-	
-	public HoaDonNhapHangOrderLine( int idMatHang, int soLuong,double donGia) {
-		super();
-		this.idMatHang = idMatHang;
-		this.soLuong = soLuong;
-		this.donGia = donGia;
-		this.thanhTien = soLuong*donGia;
-	}
+
 	
 
 	public double getDonGia() {

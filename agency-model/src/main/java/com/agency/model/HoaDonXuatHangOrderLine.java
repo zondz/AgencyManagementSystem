@@ -22,9 +22,10 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	}
 
 	// constructor for view
-	public HoaDonXuatHangOrderLine(int idMatHang, int soLuong, double donGia, int giaKhong) {
+	public HoaDonXuatHangOrderLine(int idMatHang, DonViTinh donViTinh, int soLuong, double donGia, int giaKhong) {
 		super();
 		this.idMatHang = idMatHang;
+		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.giaKhong = giaKhong;
@@ -39,17 +40,19 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 	}
 
 	// doc tu database len
-	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, int soLuong, int giaKhong, int donGia) {
+	public HoaDonXuatHangOrderLine(int id, int idHoaDon, int idMatHang, DonViTinh donViTinh, int soLuong, int giaKhong,
+			double donGia) {
 		super();
 		this.id = id;
 		this.idHoaDon = idHoaDon;
 		this.idMatHang = idMatHang;
+		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 		this.giaKhong = giaKhong;
 		this.donGia = donGia;
 		if (giaKhong != 0) {
-			this.thanhTien = soLuong * donGia;
 
+			this.thanhTien = soLuong * giaKhong;
 		} else {
 			this.thanhTien = soLuong * donGia;
 
@@ -111,10 +114,10 @@ public class HoaDonXuatHangOrderLine implements Serializable {
 
 	public void setDonGia(double donGia) {
 		this.donGia = donGia;
-		if (this.giaKhong == 0) {
-			this.thanhTien = this.soLuong * this.donGia;
-
-		}
+		// if (this.giaKhong == 0) {
+		// this.thanhTien = this.soLuong * this.donGia;
+		//
+		// }
 	}
 
 	public double getThanhTien() {

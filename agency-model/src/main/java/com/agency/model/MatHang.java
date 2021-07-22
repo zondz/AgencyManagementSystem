@@ -1,7 +1,6 @@
 package com.agency.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.management.InvalidAttributeValueException;
 
@@ -22,7 +21,6 @@ public class MatHang implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public MatHang(String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong, int giaBanTrenDonVi,
 			MieuTa mieuTa) {
 		super();
@@ -34,24 +32,21 @@ public class MatHang implements Serializable {
 		this.mieuTa = mieuTa;
 	}
 
-
-	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
-			int giaBanTrenDonVi, MieuTa mieuTa) throws InvalidAttributeValueException {
+	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong, int giaBanTrenDonVi,
+			MieuTa mieuTa) throws InvalidAttributeValueException {
 		super();
-		if(!(this.validateTenMatHang(tenMatHang)&&this.validateSoLuong(soLuong)&&this.validateGiaBanTrenDonVi(giaBanTrenDonVi)))
-			  throw new InvalidAttributeValueException("Sai thông tin mặt hàng");
+		if (!(this.validateTenMatHang(tenMatHang) && this.validateSoLuong(soLuong)
+				&& this.validateGiaBanTrenDonVi(giaBanTrenDonVi)))
+			throw new InvalidAttributeValueException("Sai thông tin mặt hàng");
 		this.id = id;
 		this.tenMatHang = tenMatHang;
 		this.loaiHang = loaiHang;
 		this.donViTinh = donViTinh;
-	
+
 		this.soLuong = soLuong;
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 		this.mieuTa = mieuTa;
 	}
-
-	
-	
 
 	public MatHang(int id, String tenMatHang, LoaiHang loaiHang, DonViTinh donViTinh, int soLuong,
 			int giaBanTrenDonVi) {
@@ -77,7 +72,7 @@ public class MatHang implements Serializable {
 	}
 
 	public void setTenMatHang(String tenMatHang) {
-	
+
 		this.tenMatHang = tenMatHang;
 	}
 
@@ -97,14 +92,12 @@ public class MatHang implements Serializable {
 		this.donViTinh = donViTinh;
 	}
 
-
 	public int getSoLuong() {
 		return soLuong;
 	}
 
-	public void setSoLuong(int soLuong) throws InvalidAttributeValueException {
-		if (!this.validateSoLuong(soLuong))
-			throw new InvalidAttributeValueException("sai thông tin số lượng: " + soLuong);
+	public void setSoLuong(int soLuong) {
+
 		this.soLuong = soLuong;
 	}
 
@@ -113,7 +106,7 @@ public class MatHang implements Serializable {
 	}
 
 	public void setGiaBanTrenDonVi(int giaBanTrenDonVi) {
-		
+
 		this.giaBanTrenDonVi = giaBanTrenDonVi;
 	}
 
@@ -143,7 +136,5 @@ public class MatHang implements Serializable {
 				+ donViTinh + ", soLuong=" + soLuong + ", giaBanTrenDonVi=" + giaBanTrenDonVi + ", mieuTa=" + mieuTa
 				+ "]";
 	}
-
-	
 
 }

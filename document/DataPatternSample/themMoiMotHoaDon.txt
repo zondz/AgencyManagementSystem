@@ -1,15 +1,18 @@
-	HoaDonXuatHangServiceRepository hoaDonService = new HoaDonXuatHangServiceRepositoryImplement();
-			KhachHangServiceRepository khachHangService = new KhachHangServiceRepositoryImplement();
 
-			//**************************************************
-			KhachHang khachHang = khachHangService.getLastRecord();
-			
-			HoaDonXuatHangOrderLine orderLine1 = new HoaDonXuatHangOrderLine(1,2,100000);
-			HoaDonXuatHangOrderLine orderLine2 = new HoaDonXuatHangOrderLine(1,2,100000);
-			List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
-			orderLines.add(orderLine2);
-			orderLines.add(orderLine1);
-			
-			HoaDonXuatHang hoaDonXuatHang = new HoaDonXuatHang(100000,2000000,50000,LocalDate.of(2021, 7, 17),orderLines);
-			
-			hoaDonService.add(new HoaDonXuatHangDTO(hoaDonXuatHang,khachHang));
+		CongViecServiceRepository congViecService = new CongViecServiceRepositoryImplement();
+		HoaDonXuatHangServiceRepository hoaDonService = new HoaDonXuatHangServiceRepositoryImplement();
+		MatHangServiceRepository matHangServiceRepository = new MatHangServiceRepositoryImplement();
+
+		List<HoaDonXuatHangOrderLine> orderLines = new ArrayList<HoaDonXuatHangOrderLine>();
+		HoaDonXuatHangOrderLine order1 = new HoaDonXuatHangOrderLine(2, 2, 0, 120000);
+		HoaDonXuatHangOrderLine order2 = new HoaDonXuatHangOrderLine(2, 3, 0, 120000);
+		orderLines.add(order2);
+		orderLines.add(order1);
+
+		HoaDonXuatHang hoaDon = new HoaDonXuatHang(1, 22000, 1000000, 0, LocalDate.of(2021, 7, 22), orderLines);
+		try {
+			hoaDonService.add(hoaDon);
+		} catch (InvalidAttributeValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
